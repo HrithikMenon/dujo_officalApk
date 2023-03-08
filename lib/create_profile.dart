@@ -1,0 +1,249 @@
+
+
+import 'package:dujo_offical_apk/collage/collage_parent_profile.dart';
+import 'package:dujo_offical_apk/collage/collage_student_profile.dart';
+import 'package:dujo_offical_apk/school/school_parent_profile.dart';
+import 'package:dujo_offical_apk/school/school_student_profile.dart';
+import 'package:dujo_offical_apk/school/school_teacher_profile.dart';
+import 'package:flutter/material.dart';
+
+import 'collage/collage_faculty_profile.dart';
+
+class Profile extends StatelessWidget {
+  const Profile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Create Profile'),
+        ),
+        backgroundColor: Color.fromARGB(255, 151, 58, 163),
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: screenSize.width / 4,
+                  ),
+                  child: Container(
+                    height: screenSize.height / 3.2,
+                    width: screenSize.width / 1.2,
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Colors.black.withOpacity(0.5),
+                            spreadRadius: 5, 
+                            blurRadius: 7, 
+                            offset: Offset(0, 2), 
+                            
+                          ),
+                        
+                        ],
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 93, 8, 190),
+                            Color.fromARGB(255, 187, 33, 214),
+                          ],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Text(
+                            "School",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => StudentProfile()),
+                            );
+                          },
+                          child: Container(
+                            height: 35,
+                            width: screenSize.width / 2,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child:
+                                Center(child: Text("CREATE STUDENT PROFILE ")),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SchoolParentProfile()),
+                            );
+                          },
+                          child: Container(
+                            height: 35,
+                            width: screenSize.width / 2,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: Center(child: Text("CREATE PARENT PROFILE")),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SchoolTeachersProfile()),
+                            );
+                          },
+                          child: Container(
+                            height: 35,
+                            width: screenSize.width / 2,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child:
+                                Center(child: Text("CREATE TEACHER PROFILE")),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 40),
+                Container(
+                  height: screenSize.height / 3.2,
+                  width: screenSize.width / 1.2,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              Colors.black.withOpacity(0.5), 
+                          spreadRadius: 5, 
+                          blurRadius: 7, 
+                          offset: Offset(0, 2), 
+                          
+                        ),
+                        
+                      ],
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromARGB(255, 93, 8, 190),
+                          Color.fromARGB(255, 187, 33, 214),
+                        ],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          "College",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Colors.black),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CollegeStudentProfile()),
+                          );
+                        },
+                        child: Container(
+                          height: 35,
+                          width: screenSize.width / 2,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Center(child: Text("CREATE STUDENT PROFILE")),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CollegeParent()),
+                          );
+                        },
+                        child: Container(
+                          height: 35,
+                          width: screenSize.width / 2,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Center(child: Text("CREATE PARENT PROFILE")),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CollegeFacualty()),
+                          );
+                        },
+                        child: Container(
+                          height: 35,
+                          width: screenSize.width / 2,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Center(child: Text("CREATE FACULTY PROFILE")),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            
+                SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+}

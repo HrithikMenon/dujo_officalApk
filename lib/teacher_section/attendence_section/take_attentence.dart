@@ -1,0 +1,152 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dujo_offical_apk/model/get_students_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/intl.dart';
+
+class TakeAttenenceScreen extends StatefulWidget {
+  var schoolID;
+  var classID;
+  TakeAttenenceScreen(
+      {required this.classID, required this.schoolID, super.key});
+
+  @override
+  State<TakeAttenenceScreen> createState() => _TakeAttenenceScreenState();
+}
+
+class _TakeAttenenceScreenState extends State<TakeAttenenceScreen> {
+  bool? present;
+  Map<String, bool?> presentlist = {};
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Take Attendence'),
+      ),
+      body: SafeArea(
+          child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection("SchoolListCollection")
+            .doc(widget.schoolID)
+            .collection("Classes")
+            .doc(widget.classID)
+            .collection(widget.classID)
+            .orderBy('studentName', descending: false)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.separated(
+                itemBuilder: (context, index) {
+                  final data = AddStudentsModel.fromJson(
+                      snapshot.data!.docs[index].data());
+                  return Container(
+                    height: 60,
+                    color: presentlist[data.admissionNumber] == null
+                        ? Colors.transparent
+                        : presentlist[data.admissionNumber] == true
+                            ? Colors.green
+                            : Colors.red,
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('${index + 1}'),
+                        Text(data.studentName),
+                        IconButton(
+                            onPressed: () async {
+                              setState(() {
+                                presentlist[data.admissionNumber] = true;
+                                log(present.toString());
+                              });
+                              final date = DateTime.now();
+                              DateTime parseDate =
+                                  DateTime.parse(date.toString());
+                              final DateFormat formatter =
+                                  DateFormat("dd-MM-yyyy");
+                              String formatted = formatter.format(parseDate);
+                              await FirebaseFirestore.instance
+                                  .collection("SchoolListCollection")
+                                  .doc(widget.schoolID)
+                                  .collection("Classes")
+                                  .doc(widget.classID)
+                                  .collection("Attendence")
+                                  .doc(formatted)
+                                  .set({"id": formatted}).then((value) {
+                                FirebaseFirestore.instance
+                                    .collection("SchoolListCollection")
+                                    .doc(widget.schoolID)
+                                    .collection("Classes")
+                                    .doc(widget.classID)
+                                    .collection("Attendence")
+                                    .doc(formatted)
+                                    .collection('PresentList')
+                                    .doc(data.studentName)
+                                    .set({
+                                  "studentName": data.studentName,
+                                  "present": true,
+                                  "Date": DateTime.now().toString()
+                                });
+                              });
+
+                              log(present.toString());
+                            },
+                            icon: Icon(Icons.add)),
+                        IconButton(
+                            onPressed: () async {
+                              setState(() {
+                                presentlist[data.admissionNumber] = false;
+                                log(present.toString());
+                              });
+                              final date = DateTime.now();
+                              DateTime parseDate =
+                                  DateTime.parse(date.toString());
+                              final DateFormat formatter =
+                                  DateFormat('dd-MM-yyyy');
+                              String formatted = formatter.format(parseDate);
+                              await FirebaseFirestore.instance
+                                  .collection("SchoolListCollection")
+                                  .doc(widget.schoolID)
+                                  .collection("Classes")
+                                  .doc(widget.classID)
+                                  .collection("Attendence")
+                                  .doc(formatted)
+                                  .set({"id": formatted}).then((value) {
+                                FirebaseFirestore.instance
+                                    .collection("SchoolListCollection")
+                                    .doc(widget.schoolID)
+                                    .collection("Classes")
+                                    .doc(widget.classID)
+                                    .collection("Attendence")
+                                    .doc(formatted)
+                                    .collection('PresentList')
+                                    .doc(data.studentName)
+                                    .set({
+                                  "studentName": data.studentName,
+                                  "present": false,
+                                  "Date": DateTime.now().toString()
+                                });
+                              });
+                              log(present.toString());
+                            },
+                            icon: Icon(Icons.remove))
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return Divider();
+                },
+                itemCount: snapshot.data!.docs.length);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+          }
+        },
+      )),
+    );
+  }
+}
