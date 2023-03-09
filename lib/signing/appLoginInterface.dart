@@ -1,5 +1,6 @@
 import 'package:dujo_offical_apk/controllers/get_schoolList/dropdown-schoolList.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'dujosigning.dart';
 
@@ -79,7 +80,7 @@ class _OpeningPageState extends State<OpeningPage> {
                           top: screenSize.width * 1 / 5,
                           right: screenSize.width * 1 / 3),
                       child: Text(
-                        "Hello...",
+                        "Hello...".tr,
                         style: TextStyle(
                             fontSize: 32,
                             fontFamily: 'family_name',
@@ -106,7 +107,7 @@ class _OpeningPageState extends State<OpeningPage> {
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Enter Your School ID'),
+                      title:  Text('Enter Your School ID'.tr),
                       content: SingleChildScrollView(
                         child: ListBody(
                           children: <Widget>[GetSchoolListDropDownButton()],
@@ -119,7 +120,7 @@ class _OpeningPageState extends State<OpeningPage> {
                       ),
                       actions: <Widget>[
                         TextButton(
-                          child: const Text('ok'),
+                          child:  Text('ok'.tr),
                           onPressed: () async {
                             await Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
@@ -131,7 +132,7 @@ class _OpeningPageState extends State<OpeningPage> {
                           },
                         ),
                         TextButton(
-                          child: const Text('cancel'),
+                          child:  Text('cancel'.tr),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -141,7 +142,7 @@ class _OpeningPageState extends State<OpeningPage> {
                   },
                 );
                           },
-                          child: const Text('Login'),
+                          child:  Text('Login'.tr),
                         ),
                       ),
                     ),
