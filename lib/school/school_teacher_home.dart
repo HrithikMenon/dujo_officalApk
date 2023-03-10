@@ -53,8 +53,24 @@ class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
               children: [
                Column(
                   children: [
-                    Image(image: AssetImage('assets/images/dujo top login.png')),
-              Image(image: AssetImage('assets/images/leptondujobg.png'))
+                    
+              // Padding(
+              //   padding: const EdgeInsets.all(20),
+              //   child: Image(image: AssetImage('assets/images/dujoo.png')),
+              // )
+              Padding(
+                padding:  EdgeInsets.only(top:50 ,left: screenSize.width*1/3),
+                child: Container(
+                  height: screenSize.width*1/6,
+                  width: 100,
+                   decoration: new BoxDecoration(
+                   image: new DecorationImage(
+                   image: new AssetImage('assets/images/leptdujo.png'),
+                   fit: BoxFit.fill,
+                     )
+                   )
+                 ),
+              )
                     // Container(
                     //     margin: EdgeInsets.only(top: screenSize.width * 1 / 12),
                     //     width: screenSize.width / 3,
