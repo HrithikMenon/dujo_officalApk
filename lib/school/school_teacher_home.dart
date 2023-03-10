@@ -54,52 +54,25 @@ class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
                Column(
                   children: [
                     
-              // Padding(
-              //   padding: const EdgeInsets.all(20),
-              //   child: Image(image: AssetImage('assets/images/dujoo.png')),
-              // )
+             
               Padding(
-                padding:  EdgeInsets.only(top:50 ,left: screenSize.width*1/3),
-                child: Container(
-                  height: screenSize.width*1/6,
-                  width: 100,
-                   decoration: new BoxDecoration(
-                   image: new DecorationImage(
-                   image: new AssetImage('assets/images/leptdujo.png'),
-                   fit: BoxFit.fill,
+                padding:  EdgeInsets.only(top:screenSize.width*1/15 ,
+                //left: screenSize.width*1/3.3
+                ),
+                child: Center(
+                  child: Container(
+                    height: screenSize.width*1/6,
+                    width: 100,
+                     decoration: new BoxDecoration(
+                     image: new DecorationImage(
+                     image: new AssetImage('assets/images/leptdujo.png'),
+                     fit: BoxFit.fill,
+                       )
                      )
-                   )
-                 ),
+                   ),
+                ),
               )
-                    // Container(
-                    //     margin: EdgeInsets.only(top: screenSize.width * 1 / 12),
-                    //     width: screenSize.width / 3,
-                    //     child: const Divider(
-                    //       color: Colors.red,
-                    //       thickness: 3,
-                    //     )),
-                    // Padding(
-                    //   padding: EdgeInsets.only(top: screenSize.width * 1 / 12),
-                    //   child: Container(
-                    //     height: screenSize.width * 1 / 7,
-                    //     width: screenSize.width * 1 / 3,
-                    //     decoration: const BoxDecoration(
-                    //       image: DecorationImage(
-                    //         image: NetworkImage(
-                    //           "https://storage.googleapis.com/scipro-bucket/lepton%20dujo.png",
-                    //         ),
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Container(
-                    //     margin: EdgeInsets.only(top: screenSize.width * 1 / 12),
-                    //     width: screenSize.width / 3,
-                    //     child: const Divider(
-                    //       color: Colors.red,
-                    //       thickness: 3,
-                    //     )),
+                
                   ],
                 ),
               ],
