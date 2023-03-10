@@ -21,27 +21,27 @@ class Onboardingpage extends StatelessWidget {
         showNextButton: true,
         pages: [
           PageViewModel(
-            image: const Image(image: AssetImage('assets/images/SCIPRO.png')),
+            image: const Image(image: AssetImage('assets/images/dujoo.png')),
             title: 'WELCOME TO ',
-            body: 'SCIPRO',
+            body: 'DuJo',
             decoration: getPageDecoration(),
           ),
           PageViewModel(
-            image: const Image(image: AssetImage('assets/images/SCIPRO.png')),
-            title: 'Your Dream JOB \n Is Just a Finger tip Away',
-            body: 'SCIPRO',
+            image: const Image(image: AssetImage('assets/images/dujoo.png')),
+            title: 'Feed your mind\n',
+            body: 'DuJo',
             decoration: getPageDecoration(),
           ),
           PageViewModel(
-            image: const Image(image: AssetImage('assets/images/SCIPRO.png')),
-            title: 'Welcome  to new phase of \n Education',
-            body: 'SCIPRO',
+            image: const Image(image: AssetImage('assets/images/dujoo.png')),
+            title: 'Change the world \n',
+            body: 'DuJo',
             decoration: getPageDecoration(),
           ),
           PageViewModel(
-            image: const Image(image: AssetImage('assets/images/SCIPRO.png')),
+            image: const Image(image: AssetImage('assets/images/dujoo.png')),
             title: 'Thank you for your patience\n Please Wait.... ',
-            body: 'SCIPRO',
+            body: 'DuJo',
             decoration: getPageDecoration(),
             footer: ButtonWidget(
               text: 'Launch App ',

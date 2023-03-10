@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setSeenonBoard();
     return Scaffold(
       appBar: AppBar(
-        title:  Text("SCIPRO".tr),
+        title:  Text("DUJO".tr),
       ),
       body: pages[_page],
       bottomNavigationBar: Container(
@@ -64,8 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 6, 71, 157),
-              Color.fromARGB(255, 5, 85, 222)
+              Color.fromARGB(255, 247, 39, 244),
+              Color.fromARGB(255, 153, 2, 145)
             ],
           ),
         ),
