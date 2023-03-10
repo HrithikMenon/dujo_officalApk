@@ -1,8 +1,7 @@
 import 'package:dujo_offical_apk/controllers/get_schoolList/getx_language.dart';
-import 'package:dujo_offical_apk/home/home.dart';
-import 'package:dujo_offical_apk/home/on_bording_section/on_bording.dart';
+
 import 'package:dujo_offical_apk/selct_language.dart';
-import 'package:dujo_offical_apk/signing/appLoginInterface.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
