@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:developer';
+import 'package:dujo_offical_apk/signing/dujosigning.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,8 +8,6 @@ import 'package:introduction_screen/introduction_screen.dart';
 
 import '../../widget/button_container.dart';
 import '../home.dart';
-
-
 
 class Onboardingpage extends StatelessWidget {
   const Onboardingpage({Key? key}) : super(key: key);
@@ -39,15 +38,41 @@ class Onboardingpage extends StatelessWidget {
             decoration: getPageDecoration(),
           ),
           PageViewModel(
-            image: const Image(image: AssetImage('assets/images/dujoo.png')),
-            title: 'Thank you for your patience\n Please Wait.... ',
-            body: 'DuJo',
-            decoration: getPageDecoration(),
-            footer: ButtonWidget(
-              text: 'Launch App ',
-              onClicked: () => goToHome(context),
-            ),
-          ),
+              image: const Image(image: AssetImage('assets/images/dujoo.png')),
+              title: 'Thank you for your patience\n Please Wait.... ',
+              body: 'DuJo',
+              decoration: getPageDecoration(),
+              footer: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.offAll(DujoLogin());
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: containerColor[0].first.withOpacity(0.4),
+                            blurRadius: 8,
+                            spreadRadius: 2,
+                            offset: const Offset(4, 4),
+                          ),
+                        ],
+                        gradient: LinearGradient(
+                            colors: containerColor[0],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      height: 60,
+                      width: 200,
+                      child: const Center(child: Text("Lauch app",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)),
+                    ),
+                  ),
+                ],
+              )),
         ],
         done: const Text(
           'Read',
@@ -67,8 +92,8 @@ class Onboardingpage extends StatelessWidget {
     );
   }
 
-  void goToHome(context) => Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
+  // void goToHome(context) => Navigator.of(context)
+  //     .pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
 
   void goToOnboard(context) => Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => const Onboardingpage()));
@@ -104,23 +129,16 @@ class ButtonWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: () {
-          Get.offAll(HomeScreen());
-        },
-        child: ButtonContainerWidget(
-          curving: 30,
-          colorindex: 1,
-          height: 60,
-          width: 200,
-          child: Center(
-            child: Text(
-              text,
-              style: GoogleFonts.montserrat(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700),
-            ),
+  Widget build(BuildContext context) => ButtonContainerWidget(
+        curving: 30,
+        colorindex: 1,
+        height: 60,
+        width: 200,
+        child: Center(
+          child: Text(
+            text,
+            style: GoogleFonts.montserrat(
+                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
           ),
         ),
       );
@@ -133,5 +151,3 @@ class ButtonWidget extends StatelessWidget {
 //         child: Text(
 //           text,
 //           style: const TextStyle(color: Colors.black, fontSize: 16),
-//         ),
-//       );
