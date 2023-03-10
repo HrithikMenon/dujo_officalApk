@@ -2,9 +2,11 @@ import 'package:dujo_offical_apk/signing/dujosignup.dart';
 import 'package:flutter/material.dart';
 
 class ParentLoginSection extends StatelessWidget {
-  const ParentLoginSection({
+  var schoolID;
+   ParentLoginSection({
     super.key,
     required this.screenSize,
+        required this.schoolID,
   });
 
   final Size screenSize;
@@ -120,7 +122,7 @@ class ParentLoginSection extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          DujoSignup(),
+                          DujoSignup(schoolID:schoolID ),
                     ));
               },
               child: const Text('SIGN IN'),
@@ -153,7 +155,7 @@ class ParentLoginSection extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const DujoSignup()),
+                             DujoSignup(schoolID: schoolID,)),
                   );
                 },
               ),

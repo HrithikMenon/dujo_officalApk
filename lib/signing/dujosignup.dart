@@ -1,24 +1,22 @@
 import 'package:dujo_offical_apk/create_profile.dart';
+import 'package:dujo_offical_apk/signing/Get_students/get_students_drop_downlist.dart';
 import 'package:dujo_offical_apk/signing/dujosigning.dart';
+import 'package:dujo_offical_apk/signing/phone_otp/newPhone_otp_screen.dart';
+import 'package:dujo_offical_apk/signing/phone_otp/phone_otp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../controllers/get_schoolList/dropdown-schoolList.dart';
+import 'Get_school/get_schooil_dropList.dart';
 
-const List<Widget> Schools = <Widget>[
-  Text('Student'),
-  Text('Parent'),
-  Text('Teacher')
-];
+class DujoSignup extends StatelessWidget {
+  var schoolID;
+  var classID;
 
-class DujoSignup extends StatefulWidget {
-  const DujoSignup({super.key});
+  DujoSignup({required this.schoolID, this.classID, super.key});
 
-  @override
-  State<DujoSignup> createState() => _DujoSignupState();
-}
-
-class _DujoSignupState extends State<DujoSignup> {
   final List<bool> _selectedSchools = <bool>[true, false, false];
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -111,37 +109,6 @@ class _DujoSignupState extends State<DujoSignup> {
                 child: Column(
                   children: [
                     Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 245, 162, 166),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: ToggleButtons(
-                        onPressed: (int index) {
-                          setState(() {
-                            for (int i = 0; i < _selectedSchools.length; i++) {
-                              _selectedSchools[i] = i == index;
-                            }
-                          });
-                        },
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(1)),
-                        selectedBorderColor: Colors.red[700],
-                        selectedColor: Colors.black,
-                        fillColor: Colors.white,
-                        color: Colors.black,
-                        constraints: const BoxConstraints(
-                          minHeight: 40.0,
-                          minWidth: 100.0,
-                        ),
-                        isSelected: _selectedSchools,
-                        children: Schools,
-                      ),
-                    ),
-                    SizedBox(
-                      height: screenSize.width * 1 / 15,
-                    ),
-                    Container(
                       height: 60,
                       width: 250,
                       child: Container(
@@ -153,178 +120,8 @@ class _DujoSignupState extends State<DujoSignup> {
                               color: Color.fromARGB(255, 238, 238, 238)),
                           borderRadius: BorderRadius.circular(13),
                         ),
-                        child: DropdownButton(
-                          hint: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Select Category",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 18),
-                            ),
-                          ),
-                          underline: const SizedBox(),
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                          icon: const Padding(
-                            padding: EdgeInsets.all(
-                              13,
-                            ),
-                            child: Icon(Icons.arrow_drop_down,
-                                size: 18, color: Colors.grey),
-                          ),
-                          isExpanded: true,
-                          items: [
-                            "School",
-                            "College",
-                          ].map(
-                            (val) {
-                              return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              var yourVar = val.toString();
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: screenSize.width * 1 / 10,
-                    ),
-                    Container(
-                      height: 60,
-                      width: 250,
-                      child: Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              color: Color.fromARGB(255, 238, 238, 238)),
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        child: const GetSchoolListDropDownButton()
-                      ),
-                    ),
-                    SizedBox(
-                      height: screenSize.width * 1 / 10,
-                    ),
-                    Container(
-                      height: 60,
-                      width: 250,
-                      child: Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              color: Color.fromARGB(255, 238, 238, 238)),
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        child: DropdownButton(
-                          hint: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Select Class",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 18),
-                            ),
-                          ),
-                          underline: const SizedBox(),
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                          icon: const Padding(
-                            padding: EdgeInsets.all(
-                              13,
-                            ),
-                            child: Icon(Icons.arrow_drop_down,
-                                size: 18, color: Colors.grey),
-                          ),
-                          isExpanded: true,
-                          items: [
-                            "Class 1",
-                            "Class 2",
-                          ].map(
-                            (val) {
-                              return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              var yourVar = val.toString();
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: screenSize.width * 1 / 10,
-                    ),
-                    Container(
-                      height: 60,
-                      width: 250,
-                      child: Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              color: Color.fromARGB(255, 238, 238, 238)),
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        child: DropdownButton(
-                          hint: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Select Name",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 18),
-                            ),
-                          ),
-                          underline: const SizedBox(),
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                          icon: const Padding(
-                            padding: EdgeInsets.all(
-                              13,
-                            ),
-                            child: Icon(Icons.arrow_drop_down,
-                                size: 18, color: Colors.grey),
-                          ),
-                          isExpanded: true,
-                          items: [
-                            "Name 1",
-                            "Name 2",
-                          ].map(
-                            (val) {
-                              return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              var yourVar = val.toString();
-                            });
-                          },
-                        ),
+                        child: GetStudentsForSignUpDropDownButton(
+                            schoolID: schoolID, classID: classID),
                       ),
                     ),
                     Padding(
@@ -405,12 +202,22 @@ class _DujoSignupState extends State<DujoSignup> {
                           padding: const EdgeInsets.all(9.0),
                           textStyle: const TextStyle(fontSize: 17),
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Profile(),
-                              ));
+                        onPressed: () async {
+                          Get.to(PhoneVerificationScreen(
+                            classID: classID,
+                            studentID: studentsListValue!["id"],
+                            schooilID: schoolID,
+                          ));
+                          // await Get.to(ScreenPhoneLogin(
+                          //   classID: classID,
+                          //   schooilID: schoolID,
+                          //   studentID: studentsListValue!["id"],
+                          // ));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => Profile(),
+                          //     ));
                         },
                         child: const Text('SIGN UP'),
                       ),
@@ -434,11 +241,12 @@ class _DujoSignupState extends State<DujoSignup> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>  DujoLogin()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => DujoLogin(classID: classID,)),
+                            // );
+                            // Get.to(ScreenPhoneLogin(classID: classID,schooilID: schoolID,));
                           },
                         ),
                       ]),

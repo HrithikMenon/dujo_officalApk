@@ -14,7 +14,8 @@ const List<Widget> schools = <Widget>[
 
 class DujoLogin extends StatefulWidget {
   var schoolID;
-   DujoLogin({ this.schoolID,super.key});
+  var classID;
+   DujoLogin({ this.schoolID,this.classID, super.key});
 
   @override
   State<DujoLogin> createState() => _DujoLoginState();
@@ -202,8 +203,8 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                               child: TabBarView(
                                 controller: tabController,
                                 children: [
-                                  StudentLoginSection(screenSize: screenSize),
-                                  ParentLoginSection(screenSize: screenSize),
+                                  StudentLoginSection(screenSize: screenSize,schoolId: widget.schoolID,classID: widget.classID),
+                                  ParentLoginSection(screenSize: screenSize,schoolID: widget.schoolID),
                                   GuardianLoginSection(screenSize: screenSize,id: ''),
                                   TeacherLoginSection(screenSize: screenSize,schoolId: widget.schoolID,)
                                 ],

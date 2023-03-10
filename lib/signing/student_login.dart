@@ -1,19 +1,30 @@
+
+import 'dart:developer';
+
 import 'package:dujo_offical_apk/signing/dujosignup.dart';
+import 'package:dujo_offical_apk/signing/phone_otp/phone_otp.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 
 
 class StudentLoginSection extends StatelessWidget {
-  const StudentLoginSection({
+  var schoolId;
+    var classID;
+   StudentLoginSection({
     super.key,
     required this.screenSize,
+        required this.schoolId,
+        this.classID,
   });
 
   final Size screenSize;
 
   @override
   Widget build(BuildContext context) {
+    log(classID.toString());
     return Container(
       height: 300,
       width: double.infinity,
@@ -123,7 +134,7 @@ class StudentLoginSection extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          DujoSignup(),
+                          DujoSignup(schoolID: schoolId),
                     ));
               },
               child: const Text('SIGN IN'),
@@ -152,12 +163,15 @@ class StudentLoginSection extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const DujoSignup()),
-                  );
+
+                  
+                  Get.to(DujoSignup(schoolID: schoolId,classID: classID,));
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) =>
+                  //            DujoSignup(schoolID:schoolId ,classID: classID,)),
+                  // );
                 },
               ),
             ]),

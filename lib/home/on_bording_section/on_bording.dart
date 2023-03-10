@@ -1,11 +1,13 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:developer';
+import 'package:dujo_offical_apk/signing/appLoginInterface.dart';
 import 'package:dujo_offical_apk/signing/dujosigning.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
+import '../../signing/select_school.dart';
 import '../../widget/button_container.dart';
 import '../home.dart';
 
@@ -46,7 +48,7 @@ class Onboardingpage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.offAll(DujoLogin());
+                      Get.offAll(OpeningPage());
                     },
                     child: Container(
                       decoration: BoxDecoration(

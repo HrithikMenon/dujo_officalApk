@@ -1,4 +1,5 @@
 import 'package:dujo_offical_apk/controllers/get_schoolList/dropdown-schoolList.dart';
+import 'package:dujo_offical_apk/signing/Get_school/get_schooil_dropList.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -101,48 +102,45 @@ class _OpeningPageState extends State<OpeningPage> {
                             padding: const EdgeInsets.all(9.0),
                             textStyle: const TextStyle(fontSize: 17),
                           ),
-                          onPressed: () async{
-                             await  showDialog(
-                  context: context,
-                  barrierDismissible: false, // user must tap button!
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title:  Text('Enter Your School ID'.tr),
-                      content: SingleChildScrollView(
-                        child: ListBody(
-                          children: <Widget>[GetSchoolListDropDownButton()],
-                          // children: [
-                          //   // TextFormField(
-                          //   //   controller:schoolIdController,
-                          //   // )
-                          // ],
-                        ),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          child:  Text('ok'.tr),
                           onPressed: () async {
-                            await Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return DujoLogin(
-                                  schoolID: schoolListValue!["id"],
+                            await showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // user must tap button!
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Enter Your School ID'.tr),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: <Widget>[
+                                        GetSchoolListDropDownButton()
+                                      ],
+                                      // children: [
+                                      //   // TextFormField(
+                                      //   //   controller:schoolIdController,
+                                      //   // )
+                                      // ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('ok'.tr),
+                                      onPressed: () async {
+                                        selectClass(context);
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text('cancel'.tr),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
                                 );
                               },
-                            ));
+                            );
                           },
-                        ),
-                        TextButton(
-                          child:  Text('cancel'.tr),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-                          },
-                          child:  Text('Login'.tr),
+                          child: Text('Login'.tr),
                         ),
                       ),
                     ),
@@ -153,4 +151,38 @@ class _OpeningPageState extends State<OpeningPage> {
       ),
     ));
   }
+}
+
+selectClass(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Select your class'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              GetClassesForSignUpDropDownButton(
+                  schoolID: schoolListValue!["id"]),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('ok'),
+            onPressed: () async {
+              await Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return DujoLogin(
+                    schoolID: schoolListValue!["id"],classID:classesListValue!["id"] ,
+                  );
+                },
+              ));
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

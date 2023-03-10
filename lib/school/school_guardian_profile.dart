@@ -122,7 +122,7 @@ class GuardianLoginSection extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          DujoSignup(),
+                          DujoSignup(schoolID: id),
                     ));
               },
               child: const Text('SIGN IN'),
@@ -155,7 +155,7 @@ class GuardianLoginSection extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const DujoSignup()),
+                             DujoSignup(schoolID: id,)),
                   );
                 },
               ),
