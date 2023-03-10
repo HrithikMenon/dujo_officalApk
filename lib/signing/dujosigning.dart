@@ -1,3 +1,4 @@
+import 'package:dujo_offical_apk/school/school_guardian_profile.dart';
 import 'package:dujo_offical_apk/signing/dujosignup.dart';
 import 'package:dujo_offical_apk/signing/login_teacher.dart';
 import 'package:dujo_offical_apk/signing/parentLogin.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 const List<Widget> schools = <Widget>[
   Text('Student'),
   Text('Parent'),
+  Text('Guardian'),
   Text('Teacher')
 ];
 
@@ -19,11 +21,11 @@ class DujoLogin extends StatefulWidget {
 }
 
 class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
-  final List<bool> _selectedSchools = <bool>[true, false, false];
+  final List<bool> _selectedSchools = <bool>[true, false, false,false];
 
   @override
   Widget build(BuildContext context) {
-    TabController tabController = TabController(length: 3, vsync: this);
+    TabController tabController = TabController(length: 4, vsync: this);
     var screenSize = MediaQuery.of(context).size;
 
     return SafeArea(
@@ -179,6 +181,13 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
+                                       Text(
+                                        "Guardian",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
                                       Text(
                                         "Teacher",
                                         style: TextStyle(
@@ -195,6 +204,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                                 children: [
                                   StudentLoginSection(screenSize: screenSize),
                                   ParentLoginSection(screenSize: screenSize),
+                                  GuardianLoginSection(screenSize: screenSize),
                                   TeacherLoginSection(screenSize: screenSize,schoolId: widget.schoolID,)
                                 ],
                               ),
