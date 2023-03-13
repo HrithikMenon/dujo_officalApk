@@ -121,7 +121,7 @@ class GetPhoneOTPVerificationScreen extends StatelessWidget {
                                         TextButton(
                                           child: const Text('ok'),
                                           onPressed: () {
-                                          Get.off(Profile());
+                                          Get.off(Profile( imagepath: '',));
                                           },
                                         ),
                                       ],

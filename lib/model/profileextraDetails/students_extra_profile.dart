@@ -1,4 +1,4 @@
-//     final GetAttendenceModel = GetAttendenceModelFromJson(jsonString);
+//     final AddExtraDetailsofStudentsModel = AddExtraDetailsofStudentsModelFromJson(jsonString);
 
 // ignore_for_file: file_names
 
@@ -7,14 +7,16 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-GetAttendenceModel GetAttendenceModelFromJson(String str) =>
-    GetAttendenceModel.fromJson(json.decode(str));
+AddExtraDetailsofStudentsModel AddExtraDetailsofStudentsModelFromJson(
+        String str) =>
+    AddExtraDetailsofStudentsModel.fromJson(json.decode(str));
 
-String GetAttendenceModelToJson(GetAttendenceModel data) =>
+String AddExtraDetailsofStudentsModelToJson(
+        AddExtraDetailsofStudentsModel data) =>
     json.encode(data.toJson());
 
-class GetAttendenceModel {
-  GetAttendenceModel({
+class AddExtraDetailsofStudentsModel {
+  AddExtraDetailsofStudentsModel({
     required this.id,
     required this.studentClass,
     required this.bloodGroup,
@@ -34,8 +36,8 @@ class GetAttendenceModel {
   String gender;
   String studentImage;
 
-  factory GetAttendenceModel.fromJson(Map<String, dynamic> json) =>
-      GetAttendenceModel(
+  factory AddExtraDetailsofStudentsModel.fromJson(Map<String, dynamic> json) =>
+      AddExtraDetailsofStudentsModel(
         id: json["id"] ?? '',
         gender: json["gender"] ?? '',
         studentClass: json["studentClass"] ?? true,
@@ -57,9 +59,15 @@ class GetAttendenceModel {
       };
 }
 
-class AddAttendenceStatusToFireBase {
-  Future addAttendenceStatusController(GetAttendenceModel productModel, context,
-      schoolid, classId, formatter, studentName, studentemail) async {
+class AddExtraDetailsofStudentsToFireBase {
+  Future addExtraDetailsofStudentsController(
+      AddExtraDetailsofStudentsModel productModel,
+      context,
+      schoolid,
+      classId,
+      formatter,
+      studentName,
+      studentemail) async {
     try {
       final firebase = FirebaseFirestore.instance;
       final doc = firebase

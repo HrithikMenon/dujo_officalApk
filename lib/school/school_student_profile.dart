@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import '../signing/Get_school/get_schooil_dropList.dart';
 
 class StudentProfile extends StatefulWidget {
+  var studentImage;
   var studentName;
   var studentAdmissionNumber;
   var studentemail;
 var classID;
 var schoolID;
-  StudentProfile({super.key});
+  StudentProfile({required this.studentImage, super.key});
 
   @override
   State<StudentProfile> createState() => _StudentProfileState();
@@ -78,17 +79,25 @@ class _StudentProfileState extends State<StudentProfile> {
               child: Column(children: [
                 Stack(
                   children: [
-                    const Padding(
+                     Padding(
                       padding: EdgeInsets.only(top: 20),
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundImage:
-                            NetworkImage('https://via.placeholder.com/150'),
-                        backgroundColor: Colors.transparent,
+                      child:  Container(
+                        height: 160,
+                        width: 160,
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(120)),
+                            image: DecorationImage(
+                                image: NetworkImage(widget.studentImage),
+                                fit: BoxFit.contain),
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 25, 205, 202))),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 90, top: 90),
+                      padding: const EdgeInsets.only(left: 110, top: 130),
                       child: Container(
                         height: 50,
                         width: 50,

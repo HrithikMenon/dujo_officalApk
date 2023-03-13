@@ -1,5 +1,7 @@
 
 
+import 'dart:developer';
+
 import 'package:dujo_offical_apk/collage/collage_parent_profile.dart';
 import 'package:dujo_offical_apk/collage/collage_student_profile.dart';
 import 'package:dujo_offical_apk/school/school_parent_profile.dart';
@@ -10,12 +12,15 @@ import 'package:flutter/material.dart';
 import 'collage/collage_faculty_profile.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+var imagepath;
+   Profile({required this.imagepath, super.key});
 
   @override
   Widget build(BuildContext context) {
+    log(imagepath);
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      
         appBar: AppBar(
           title: Text('Create Profile'),
         ),
@@ -72,7 +77,7 @@ class Profile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => StudentProfile()),
+                                  builder: (context) => StudentProfile(studentImage: imagepath,)),
                             );
                           },
                           child: Container(
