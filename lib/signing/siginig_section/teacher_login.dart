@@ -1,12 +1,9 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dujo_offical_apk/school/school_student_home_new.dart';
 import 'package:dujo_offical_apk/school/school_teacher_home.dart';
+import 'package:dujo_offical_apk/signing/dujo_sign_up/teacher_dujoSiginUp.dart';
 import 'package:flutter/material.dart';
-
-import 'dujosignup.dart';
-
+import 'package:get/get.dart';
 class TeacherLoginSection extends StatelessWidget {
   TextEditingController teacheridController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -172,6 +169,7 @@ class TeacherLoginSection extends StatelessWidget {
                   ),
                 ),
                 onTap: ()async {
+                  Get.to(TeacherDujoSignup(schoolID: schoolId));
            //
                 },
               ),

@@ -1,8 +1,7 @@
-import 'package:dujo_offical_apk/school/school_guardian_profile.dart';
-import 'package:dujo_offical_apk/signing/dujosignup.dart';
-import 'package:dujo_offical_apk/signing/login_teacher.dart';
-import 'package:dujo_offical_apk/signing/parentLogin.dart';
-import 'package:dujo_offical_apk/signing/student_login.dart';
+import 'package:dujo_offical_apk/signing/siginig_section/guardian_login.dart';
+import 'package:dujo_offical_apk/signing/siginig_section/teacher_login.dart';
+import 'package:dujo_offical_apk/signing/siginig_section/parentLogin.dart';
+import 'package:dujo_offical_apk/signing/siginig_section/student_login.dart';
 import 'package:flutter/material.dart';
 
 const List<Widget> schools = <Widget>[
@@ -15,14 +14,14 @@ const List<Widget> schools = <Widget>[
 class DujoLogin extends StatefulWidget {
   var schoolID;
   var classID;
-   DujoLogin({ this.schoolID,this.classID, super.key});
+  DujoLogin({this.schoolID, this.classID, super.key});
 
   @override
   State<DujoLogin> createState() => _DujoLoginState();
 }
 
 class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
-  final List<bool> _selectedSchools = <bool>[true, false, false,false];
+  final List<bool> _selectedSchools = <bool>[true, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                   child: Container(
                     height: screenSize.width * 1 / 7,
                     width: screenSize.width * 1 / 2,
-                    child: Text(
+                    child: const Text(
                       "Sign In",
                       style: TextStyle(
                           fontSize: 35,
@@ -59,7 +58,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                   child: Container(
                     height: screenSize.width * 1 / 7,
                     width: screenSize.width * 1 / 2,
-                    child: Text(
+                    child: const Text(
                       "Welcome Back,",
                       style: TextStyle(
                           fontSize: 25, color: Color.fromARGB(255, 90, 1, 131)),
@@ -77,7 +76,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                             margin:
                                 EdgeInsets.only(top: screenSize.width * 1 / 12),
                             width: screenSize.width / 3,
-                            child: Divider(
+                            child: const Divider(
                               color: Colors.red,
                               thickness: 3,
                             )),
@@ -87,7 +86,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                           child: Container(
                             height: screenSize.width * 1 / 7,
                             width: screenSize.width * 1 / 3,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(
                                   "https://storage.googleapis.com/scipro-bucket/lepton%20dujo.png",
@@ -101,7 +100,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                             margin:
                                 EdgeInsets.only(top: screenSize.width * 1 / 12),
                             width: screenSize.width / 3,
-                            child: Divider(
+                            child: const Divider(
                               color: Colors.red,
                               thickness: 3,
                             )),
@@ -132,19 +131,19 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 230),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 230),
                         child: Text(
                           "Sign in As:",
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Container(
                         height: 390,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                         child: Column(
@@ -158,16 +157,16 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: TabBar(
-                                  
                                     controller: tabController,
                                     isScrollable: true,
                                     labelPadding:
-                                        EdgeInsets.symmetric(horizontal: 30),
+                                        const EdgeInsets.symmetric(horizontal: 30),
                                     indicator: BoxDecoration(
-                                        color: Color.fromARGB(255, 93, 8, 190).withOpacity(0.4),
+                                        color: const Color.fromARGB(255, 93, 8, 190)
+                                            .withOpacity(0.4),
                                         borderRadius:
                                             BorderRadius.circular(12)),
-                                    tabs: [
+                                    tabs:const [
                                       Text(
                                         "Student",
                                         style: TextStyle(
@@ -182,7 +181,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
-                                       Text(
+                                      Text(
                                         "Guardian",
                                         style: TextStyle(
                                             color: Colors.black,
@@ -203,10 +202,21 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                               child: TabBarView(
                                 controller: tabController,
                                 children: [
-                                  StudentLoginSection(screenSize: screenSize,schoolId: widget.schoolID,classID: widget.classID),
-                                  ParentLoginSection(screenSize: screenSize,schoolID: widget.schoolID),
-                                  GuardianLoginSection(screenSize: screenSize,id: ''),
-                                  TeacherLoginSection(screenSize: screenSize,schoolId: widget.schoolID,)
+                                  StudentLoginSection(
+                                      screenSize: screenSize,
+                                      schoolId: widget.schoolID,
+                                      classID: widget.classID),
+                                  ParentLoginSection(
+                                    classID: widget.classID,
+                                      screenSize: screenSize,
+                                      schoolID: widget.schoolID),
+                                      // GuardianLoginSection
+                                  GuardianLoginSection(
+                                      screenSize: screenSize, id: ''),
+                                  TeacherLoginSection(
+                                    screenSize: screenSize,
+                                    schoolId: widget.schoolID,
+                                  )
                                 ],
                               ),
                             )

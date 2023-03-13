@@ -1,10 +1,17 @@
-import 'package:dujo_offical_apk/signing/dujosignup.dart';
+
+
+import 'dart:developer';
+
+import 'package:dujo_offical_apk/signing/dujo_sign_up/parent_dujoSiginUp.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ParentLoginSection extends StatelessWidget {
+  var classID;
   var schoolID;
    ParentLoginSection({
     super.key,
+    required this.classID,
     required this.screenSize,
         required this.schoolID,
   });
@@ -13,6 +20,8 @@ class ParentLoginSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(classID);
+    log(schoolID);
     return Container(
       height: 300,
       width: double.infinity,
@@ -118,12 +127,7 @@ class ParentLoginSection extends StatelessWidget {
                     const TextStyle(fontSize: 17),
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          DujoSignup(schoolID:schoolID ),
-                    ));
+               
               },
               child: const Text('SIGN IN'),
             ),
@@ -151,12 +155,8 @@ class ParentLoginSection extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                             DujoSignup(schoolID: schoolID,)),
-                  );
+                 Get.to(ParentDujoSignup(schoolID:schoolID,classID: classID,));
+            
                 },
               ),
             ]),

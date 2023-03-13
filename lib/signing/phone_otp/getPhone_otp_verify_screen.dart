@@ -1,23 +1,36 @@
-// ignore_for_file: file_names, deprecated_member_use
+import 'dart:developer';
 
+import 'package:dujo_offical_apk/create_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
+
 import '../../controllers/Bloc/Phone_otp/auth_cubit.dart';
 import '../../controllers/Bloc/Phone_otp/auth_state.dart';
+import '../../school/school_student_profile.dart';
 import '../appLoginInterface.dart';
 
-class ScreenOtpVerfication extends StatelessWidget {
+class GetPhoneOTPVerificationScreen extends StatelessWidget {
+  var phoneNumber;
+  var userEmail;
+  var userPassword;
   final otpController = TextEditingController();
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  ScreenOtpVerfication({super.key});
+  GetPhoneOTPVerificationScreen(
+      {required this.phoneNumber,
+      required this.userEmail,
+      required this.userPassword,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
+    log('email>>>>>>>>>>>>>>>>>>>>>>>>${userEmail}');
+    log('password>>>>>>>>>>>>>>>>>>>>>>>>${userPassword}');
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
@@ -30,20 +43,17 @@ class ScreenOtpVerfication extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
     );
-
     // ignore: unused_local_variable
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
       border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
       borderRadius: BorderRadius.circular(8),
     );
-
     // ignore: unused_local_variable
     final submittedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
         color: const Color.fromRGBO(234, 239, 243, 1),
       ),
     );
-    // ignore: unused_local_variable
     var code = "";
     return Scaffold(
       body: SafeArea(
@@ -53,8 +63,8 @@ class ScreenOtpVerfication extends StatelessWidget {
               child: Column(
                 children: [
                   LottieBuilder.asset(
-                      'assest/Images/105761-verification-code-otp-v2.json',
-                      height: 300.h),
+                      'assets/images/105761-verification-code-otp-v2.json',
+                      height: 300),
                   const Text(
                     'Otp Verification',
                     style: TextStyle(fontSize: 20),
@@ -62,7 +72,8 @@ class ScreenOtpVerfication extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  const Text('We need to register your phone before getting'),
+                  Text(
+                      'We need to register your phone ${phoneNumber}before getting'),
                   SizedBox(
                     height: 10,
                   ),
@@ -87,7 +98,37 @@ class ScreenOtpVerfication extends StatelessWidget {
                   BlocConsumer<AuthCubit, AuthState>(
                     listener: (context, state) {
                       if (state is AuthLoggedInState) {
-                        Get.offAll(const OpeningPage());
+                        FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: userEmail, password: userPassword);
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Message'),
+
+
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text('Registration Successfully'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('ok'),
+                                          onPressed: () {
+                                          Get.off(Profile());
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                            
                       } else if (state is AuthErrorState) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

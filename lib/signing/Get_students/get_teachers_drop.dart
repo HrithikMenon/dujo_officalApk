@@ -4,26 +4,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-var studentsListValue;
+var teachersListValue;
 
-class GetStudentsForSignUpDropDownButton extends StatefulWidget {
+class GetTeachersDropDownButton extends StatefulWidget {
   var schoolID;
-  var classID;
-  
-  GetStudentsForSignUpDropDownButton(
-      {required this.schoolID, required this.classID, Key? key})
+
+
+  GetTeachersDropDownButton(
+      {required this.schoolID, Key? key})
       : super(key: key);
 
   @override
-  State<GetStudentsForSignUpDropDownButton> createState() =>
+  State<GetTeachersDropDownButton> createState() =>
       _GeClasseslListDropDownButtonState();
 }
 
 class _GeClasseslListDropDownButtonState
-    extends State<GetStudentsForSignUpDropDownButton> {
+    extends State<GetTeachersDropDownButton> {
   @override
   Widget build(BuildContext context) {
-   
     return dropDownButton();
   }
 
@@ -32,18 +31,18 @@ class _GeClasseslListDropDownButtonState
         stream: FirebaseFirestore.instance
             .collection("SchoolListCollection")
             .doc(widget.schoolID)
-            .collection("Classes").doc(widget.classID).collection('Students')
+            .collection("Teachers")
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return DropdownButtonFormField(
-              hint: studentsListValue == null
+              hint: teachersListValue == null
                   ? const Text(
-                      "Class Students",
+                      "Class Teachers",
                       style: TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0), fontSize: 18),
                     )
-                  : Text(studentsListValue!["studentName"]),
+                  : Text(teachersListValue!["teacherName"]),
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide:
@@ -60,21 +59,21 @@ class _GeClasseslListDropDownButtonState
               items: snapshot.data!.docs.map(
                 (val) {
                   return DropdownMenuItem(
-                    value: val["studentName"],
-                    child: Text(val["studentName"]),
+                    value: val["teacherName"],
+                    child: Text(val["teacherName"]),
                   );
                 },
               ).toList(),
               onChanged: (val) {
                 var categoryIDObject = snapshot.data!.docs
-                    .where((element) => element["studentName"] == val)
+                    .where((element) => element["teacherName"] == val)
                     .toList()
                     .first;
-                log(categoryIDObject["studentName"]);
+                log(categoryIDObject["teacherName"]);
 
                 setState(
                   () {
-                    studentsListValue = categoryIDObject;
+                    teachersListValue = categoryIDObject;
                   },
                 );
               },

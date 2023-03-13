@@ -1,6 +1,7 @@
 import 'package:dujo_offical_apk/controllers/Bloc/Phone_otp/auth_cubit.dart';
 import 'package:dujo_offical_apk/controllers/Bloc/Phone_otp/auth_state.dart';
 import 'package:dujo_offical_apk/controllers/get_schoolList/getx_language.dart';
+import 'package:dujo_offical_apk/school/school_student_profile.dart';
 
 import 'package:dujo_offical_apk/selct_language.dart';
 import 'package:dujo_offical_apk/signing/appLoginInterface.dart';
@@ -39,13 +40,13 @@ class MyApp extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is AuthLoggedInState) {
-              return OpeningPage();
+              return StudentProfile();
               
             }else if (state is AuthLoggedOutState){
               return SelectLanguage();
 
             }
-            return OpeningPage();
+            return StudentProfile();
           },
         ),
 

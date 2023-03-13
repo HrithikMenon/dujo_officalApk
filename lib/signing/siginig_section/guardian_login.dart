@@ -1,4 +1,3 @@
-import 'package:dujo_offical_apk/signing/dujosignup.dart';
 import 'package:flutter/material.dart';
 
 class GuardianLoginSection extends StatelessWidget {
@@ -118,12 +117,12 @@ class GuardianLoginSection extends StatelessWidget {
                     const TextStyle(fontSize: 17),
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          DujoSignup(schoolID: id),
-                    ));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) =>
+                //           DujoSignup(schoolID: id),
+                //     ));
               },
               child: const Text('SIGN IN'),
             ),
@@ -151,12 +150,12 @@ class GuardianLoginSection extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                             DujoSignup(schoolID: id,)),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) =>
+                  //            DujoSignup(schoolID: id,)),
+                  // );
                 },
               ),
             ]),

@@ -2,14 +2,15 @@ import 'package:dujo_offical_apk/school/school_student_home_new.dart';
 import 'package:dujo_offical_apk/signing/dujosigning.dart';
 import 'package:flutter/material.dart';
 
-const List<Widget> Schools = <Widget>[
-  Text('Student'),
-  Text('Parent'),
-  Text('Teacher')
-];
+import '../signing/Get_school/get_schooil_dropList.dart';
 
 class StudentProfile extends StatefulWidget {
-  const StudentProfile({super.key});
+  var studentName;
+  var studentAdmissionNumber;
+  var studentemail;
+var classID;
+var schoolID;
+  StudentProfile({super.key});
 
   @override
   State<StudentProfile> createState() => _StudentProfileState();
@@ -22,7 +23,7 @@ class _StudentProfileState extends State<StudentProfile> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: ListView(children: [
         Container(
           height: 250,
@@ -33,11 +34,11 @@ class _StudentProfileState extends State<StudentProfile> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 80, left: 40),
+                    padding: const EdgeInsets.only(top: 80, left: 40),
                     child: Container(
                       height: screenSize.width * 1 / 10,
                       width: screenSize.width * 1 / 2,
-                      child: Text(
+                      child: const Text(
                         "Welcome,",
                         style: TextStyle(
                             fontSize: 20,
@@ -48,11 +49,11 @@ class _StudentProfileState extends State<StudentProfile> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5, right: 100),
+                padding: const EdgeInsets.only(top: 5, right: 100),
                 child: Container(
                   height: screenSize.width * 1 / 7,
                   width: screenSize.width * 1 / 2,
-                  child: Text(
+                  child: const Text(
                     "Sign Up,",
                     style: TextStyle(
                         fontSize: 35, color: Color.fromARGB(255, 90, 1, 131)),
@@ -63,18 +64,7 @@ class _StudentProfileState extends State<StudentProfile> {
           ),
         ),
         Stack(children: [
-          // Container(
-          //   height: screenSize.height * 0.5,
-          //   width: double.infinity,
-          //   decoration: BoxDecoration(
-          //       image: DecorationImage(
-          //           image: NetworkImage(
-          //               "https://storage.googleapis.com/scipro-bucket/dujo%20bckgrnd.jpg"),
-          //           fit: BoxFit.cover)),
-          // ),
           Container(
-              // height: screenSize.width * 1.29,
-              //  width: double.infinity,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(29),
@@ -86,47 +76,10 @@ class _StudentProfileState extends State<StudentProfile> {
                 ),
               ),
               child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 230, top: 20),
-                  child: Text(
-                    "Sign in As:",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 245, 162, 166),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: ToggleButtons(
-                    onPressed: (int index) {
-                      setState(() {
-                        for (int i = 0; i < _selectedSchools.length; i++) {
-                          _selectedSchools[i] = i == index;
-                        }
-                      });
-                    },
-                    borderRadius: const BorderRadius.all(Radius.circular(1)),
-                    selectedBorderColor: Colors.red[700],
-                    selectedColor: Colors.black,
-                    fillColor: Colors.white,
-                    color: Colors.black,
-                    constraints: const BoxConstraints(
-                      minHeight: 40.0,
-                      minWidth: 100.0,
-                    ),
-                    isSelected: _selectedSchools,
-                    children: Schools,
-                  ),
-                ),
                 Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
                       child: CircleAvatar(
                         radius: 60,
                         backgroundImage:
@@ -139,11 +92,11 @@ class _StudentProfileState extends State<StudentProfile> {
                       child: Container(
                         height: 50,
                         width: 50,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color.fromARGB(255, 0, 0, 0),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.camera_alt_outlined,
                           color: Colors.white,
                         ),
@@ -152,68 +105,41 @@ class _StudentProfileState extends State<StudentProfile> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 40, right: 40),
                   child: Column(
                     children: [
-                      Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.white]),
-                        ),
-                        child: TextField(
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: 'Name',
-
-                                // prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(19),
-                                  borderSide: BorderSide.none,
-                                )),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            )),
-                      ),
-                      SizedBox(
+                       Text('Name :' + '${widget.studentName}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.white]),
-                        ),
-                        child: TextField(
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: 'Admission Number',
+                       Text('Student email :' + '${widget.studentemail}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
 
-                                // prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(19),
-                                  borderSide: BorderSide.none,
-                                )),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            )),
-                      ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
+
+                       Text('Admission Number :' + '${widget.studentAdmissionNumber}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const SizedBox(
                         height: 20,
                       ),
                       Padding(
@@ -225,52 +151,15 @@ class _StudentProfileState extends State<StudentProfile> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
-                                color: Color.fromARGB(255, 238, 238, 238)),
+                                color:
+                                    const Color.fromARGB(255, 238, 238, 238)),
                             borderRadius: BorderRadius.circular(13),
                           ),
-                          child: DropdownButton(
-                            hint: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "Select School",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 18),
-                              ),
-                            ),
-                            underline: const SizedBox(),
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
-                            icon: const Padding(
-                              padding: EdgeInsets.all(
-                                13,
-                              ),
-                              child: Icon(Icons.arrow_drop_down,
-                                  size: 18, color: Colors.grey),
-                            ),
-                            isExpanded: true,
-                            items: [
-                              "school 1",
-                              "school 2",
-                            ].map(
-                              (val) {
-                                return DropdownMenuItem<String>(
-                                  value: val,
-                                  child: Text(val),
-                                );
-                              },
-                            ).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                var yourVar = val.toString();
-                              });
-                            },
-                          ),
+                          child: GetClassesForSignUpDropDownButton(
+                              schoolID: widget.schoolID),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       SizedBox(
@@ -290,19 +179,19 @@ class _StudentProfileState extends State<StudentProfile> {
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.white,
-                                      hintText: 'Class',
+                                      hintText: 'Blood Group',
 
                                       // prefixIcon: Icon(Icons.email),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(19),
                                         borderSide: BorderSide.none,
                                       )),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
                                   )),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Container(
@@ -326,7 +215,7 @@ class _StudentProfileState extends State<StudentProfile> {
                                         borderRadius: BorderRadius.circular(19),
                                         borderSide: BorderSide.none,
                                       )),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                   )),
@@ -334,7 +223,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Padding(
@@ -346,15 +235,16 @@ class _StudentProfileState extends State<StudentProfile> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
-                                color: Color.fromARGB(255, 238, 238, 238)),
+                                color:
+                                    const Color.fromARGB(255, 238, 238, 238)),
                             borderRadius: BorderRadius.circular(13),
                           ),
                           child: DropdownButton(
-                            hint: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                            hint: const Padding(
+                              padding: EdgeInsets.all(10.0),
                               child: Text(
                                 "Gender",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                 ),
@@ -373,10 +263,7 @@ class _StudentProfileState extends State<StudentProfile> {
                                   size: 18, color: Colors.grey),
                             ),
                             isExpanded: true,
-                            items: [
-                              "MALE",
-                              "FEMALE",
-                            ].map(
+                            items: ["MALE", "FEMALE", ""].map(
                               (val) {
                                 return DropdownMenuItem<String>(
                                   value: val,
@@ -392,7 +279,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
@@ -400,7 +287,7 @@ class _StudentProfileState extends State<StudentProfile> {
                         width: screenSize.width * 1,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(13),
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                               colors: [Colors.white, Colors.white]),
                         ),
                         child: TextField(
@@ -414,88 +301,39 @@ class _StudentProfileState extends State<StudentProfile> {
                                   borderRadius: BorderRadius.circular(19),
                                   borderSide: BorderSide.none,
                                 )),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18
-                              
-                              ,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 18,
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
+
+
+
                       Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.white]),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(29)),
+                          color: Colors.white,
                         ),
-                        child: TextField(
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: 'Address',
-
-                                // prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(19),
-                                  borderSide: BorderSide.none,
-                                )),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            )),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: screenSize.width * 1 / 15,
+                              top: screenSize.width * 1 / 20),
+                          child: const TextField(
+                            maxLines: 8, //or null
+                            decoration:
+                                InputDecoration.collapsed(hintText: "Address"),
+                          ),
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        child: TextField(
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: 'Enter Your Email',
+        
 
-                                // prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide.none,
-                                )),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            )),
-                      ),
-
-                      // BottomPicker.date(
-                      //   displaySubmitButton: true,
-                      //   displayCloseIcon: false,
-                      //   title: 'Date Of Birth',
-                      //   dateOrder: DatePickerDateOrder.dmy,
-                      //   pickerTextStyle: TextStyle(
-                      //     color: Colors.black,
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: screenSize.width * 1 / 20,
-                      //   ),
-                      //   titleStyle: TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 15,
-                      //     color: Colors.black,
-                      //   ),
-                      //   onChange: (index) {
-                      //     print(index);
-                      //   },
-                      //   onSubmit: (index) {
-                      //     print(index);
-                      //   },
-                      // ),
-                      SizedBox(
-                        height: 20,
-                      ),
+              
                       Container(
                         height: screenSize.width * 1 / 9,
                         width: screenSize.width * 1 / 1.9,
@@ -504,18 +342,13 @@ class _StudentProfileState extends State<StudentProfile> {
                             borderRadius: BorderRadius.circular(14)),
                         child: TextButton(
                           style: TextButton.styleFrom(
-                            foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                            foregroundColor:
+                                const Color.fromARGB(255, 255, 255, 255),
                             padding: const EdgeInsets.all(9.0),
                             textStyle: const TextStyle(fontSize: 17),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) =>
-                                        SchoolStudentHomeNew(
-                                          schoolId: '',
-                                        ))));
+                 
                           },
                           child: const Text('Sign Up'),
                         ),
@@ -527,13 +360,13 @@ class _StudentProfileState extends State<StudentProfile> {
                           top: screenSize.width * 1 / 29,
                         ),
                         child: Row(children: [
-                          Text(
+                          const Text(
                             "Don't have an account ? ",
                             style: TextStyle(color: Colors.white),
                           ),
                           InkWell(
                             child: Container(
-                              child: Text(
+                              child: const Text(
                                 "Sign In",
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.yellowAccent),
@@ -543,13 +376,13 @@ class _StudentProfileState extends State<StudentProfile> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>  DujoLogin()),
+                                    builder: (context) => DujoLogin()),
                               );
                             },
                           ),
                         ]),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       )
                     ],
