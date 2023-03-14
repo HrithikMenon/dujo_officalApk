@@ -214,6 +214,7 @@ class _DujoLoginState extends State<DujoLogin> with TickerProviderStateMixin {
                                   GuardianLoginSection(
                                       screenSize: screenSize, id: ''),
                                   TeacherLoginSection(
+                                    classID: widget.classID,
                                     screenSize: screenSize,
                                     schoolId: widget.schoolID,
                                   )

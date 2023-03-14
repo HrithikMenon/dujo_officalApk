@@ -2,15 +2,20 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dujo_offical_apk/school/school_teacher_home.dart';
 import 'package:dujo_offical_apk/signing/dujo_sign_up/teacher_dujoSiginUp.dart';
+import 'package:dujo_offical_apk/signing/siginig_section/student_login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class TeacherLoginSection extends StatelessWidget {
   TextEditingController teacheridController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var schoolId;
+  var classID;
 
   TeacherLoginSection({
     this.schoolId,
+    required this.classID,
     super.key,
     required this.screenSize,
   });
@@ -109,43 +114,21 @@ class TeacherLoginSection extends StatelessWidget {
                 textStyle: const TextStyle(fontSize: 17),
               ),
               onPressed: () async {
-          // >>>>>>>>>>>>>>>>>Checking ID<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                CollectionReference cat = FirebaseFirestore.instance
-                    .collection("SchoolListCollection")
-                    .doc(schoolId)
-                    .collection("Teachers");
-                Query query = cat.where("employeeID",
-                    isEqualTo: teacheridController.text.trim());
-                QuerySnapshot querySnapshot = await query.get();
-                final docData =
-                    querySnapshot.docs.map((doc) => doc.data()).toList();
-                log(query.toString());
-                log(docData.toString());
-                //
-                //>>>>>>>>>>>>>>>>>>>Checking password<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                CollectionReference pass = FirebaseFirestore.instance
-                    .collection("SchoolListCollection")
-                    .doc(schoolId)
-                    .collection("Teachers");
-                Query queries = pass.where("employeeID",
-                    isEqualTo: passwordController.text.trim());
-                QuerySnapshot querySnapshott = await queries.get();
-                final docDataa =
-                    querySnapshott.docs.map((doc) => doc.data()).toList();
-                log(query.toString());
-                log(docDataa.toString());
+                // >>>>>>>>>>>>>>>>>Checking ID<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-                if (docDataa.isNotEmpty && docData.isNotEmpty) {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return SchoolTeacherHome(
-                        schoolId: schoolId,
+                try {
+                  await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: teacheridController.text.trim(),
+                          password: passwordController.text.trim())
+                      .then(
+                        (value) => Get.to(
+                        SchoolTeacherHome(schoolId: schoolId,teacherEmail: teacheridController.text.trim(),classID:classID ,)
+                        ),
                       );
-                    },
-                  ));
-                  log('Correct password');
-                } else {
-                  log('Wrong password');
+       
+                } catch (e) {
+                  errorBox(context, e);
                 }
               },
               child: const Text('SIGN IN'),
@@ -168,9 +151,9 @@ class TeacherLoginSection extends StatelessWidget {
                     style: TextStyle(fontSize: 19, color: Colors.yellowAccent),
                   ),
                 ),
-                onTap: ()async {
+                onTap: () async {
                   Get.to(TeacherDujoSignup(schoolID: schoolId));
-           //
+                  //
                 },
               ),
             ]),

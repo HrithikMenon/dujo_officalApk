@@ -1,30 +1,51 @@
+import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dujo_offical_apk/model/profileextraDetails/teacher_extra_profileadd_model.dart';
 import 'package:dujo_offical_apk/school/school_teacher_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../signing/dujosigning.dart';
 
-const List<Widget> schools = <Widget>[
-  Text('Student'),
-  Text('Parent'),
-  Text('Teacher')
-];
-
 class SchoolTeachersProfile extends StatefulWidget {
-  const SchoolTeachersProfile({super.key});
+  var studentImage;
+  var teacherEmail;
+  var schoolID;
+  SchoolTeachersProfile(
+      {required this.studentImage,
+      required this.teacherEmail,
+      required this.schoolID,
+      super.key});
 
   @override
   State<SchoolTeachersProfile> createState() => _SchoolTeachersProfileState();
 }
 
 class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
+  TextEditingController _houseNameController = TextEditingController();
+  TextEditingController _houseNumberController = TextEditingController();
+  TextEditingController _placeController = TextEditingController();
+  TextEditingController _districtController = TextEditingController();
+  TextEditingController _stateController = TextEditingController();
+  TextEditingController _pincodeController = TextEditingController();
+  TextEditingController _bloodGroupController = TextEditingController();
+
+  String teacherName = "";
+  String employeeID = "";
+
   final List<bool> _selectedSchools = <bool>[true, false, false];
 
   @override
+  void initState() {
+    getTeacherDetails();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: ListView(children: [
         Container(
           height: 250,
@@ -35,11 +56,11 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 80, left: 40),
+                    padding: const EdgeInsets.only(top: 80, left: 40),
                     child: Container(
                       height: screenSize.width * 1 / 10,
                       width: screenSize.width * 1 / 2,
-                      child: Text(
+                      child: const Text(
                         "Welcome,",
                         style: TextStyle(
                             fontSize: 20,
@@ -50,11 +71,11 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5, right: 100),
+                padding: const EdgeInsets.only(top: 5, right: 100),
                 child: Container(
                   height: screenSize.width * 1 / 7,
                   width: screenSize.width * 1 / 2,
-                  child: Text(
+                  child: const Text(
                     "Sign Up,",
                     style: TextStyle(
                         fontSize: 35, color: Color.fromARGB(255, 90, 1, 131)),
@@ -65,15 +86,6 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
           ),
         ),
         Stack(children: [
-          // Container(
-          //   height: screenSize.height * 0.5,
-          //   width: double.infinity,
-          //   decoration: BoxDecoration(
-          //       image: DecorationImage(
-          //           image: NetworkImage(
-          //               "https://storage.googleapis.com/scipro-bucket/dujo%20bckgrnd.jpg"),
-          //           fit: BoxFit.cover)),
-          // ),
           Container(
               // height: screenSize.width * 1.29,
               //  width: double.infinity,
@@ -88,64 +100,35 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                 ),
               ),
               child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 230, top: 20),
-                  child: Text(
-                    "Sign in As:",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 245, 162, 166),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: ToggleButtons(
-                    onPressed: (int index) {
-                      setState(() {
-                        for (int i = 0; i < _selectedSchools.length; i++) {
-                          _selectedSchools[i] = i == index;
-                        }
-                      });
-                    },
-                    borderRadius: const BorderRadius.all(Radius.circular(1)),
-                    selectedBorderColor: Colors.red[700],
-                    selectedColor: Colors.black,
-                    fillColor: Colors.white,
-                    color: Colors.black,
-                    constraints: const BoxConstraints(
-                      minHeight: 40.0,
-                      minWidth: 100.0,
-                    ),
-                    isSelected: _selectedSchools,
-                    children: schools,
-                  ),
-                ),
                 Stack(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundImage:
-                            NetworkImage('https://via.placeholder.com/150'),
-                        backgroundColor: Colors.transparent,
+                      child: Container(
+                        height: 160,
+                        width: 160,
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(120)),
+                            image: DecorationImage(
+                                image: NetworkImage(widget.studentImage),
+                                fit: BoxFit.contain),
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 25, 205, 202))),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 90, top: 90),
+                      padding: const EdgeInsets.only(left: 110, top: 130),
                       child: Container(
                         height: 50,
                         width: 50,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color.fromARGB(255, 0, 0, 0),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.camera_alt_outlined,
                           color: Colors.white,
                         ),
@@ -154,373 +137,245 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 40, right: 40),
                   child: Column(
                     children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: screenSize.width * 1 / 8,
-                          width: screenSize.width * 1,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(13),
-                              color: Colors.white),
-                          child: Center(
-                            child: Text(
-                              'Name',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 18),
-                            ),
-                          ),
-                        ),
+                      Text('Name :' ' $teacherName',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
+                      const SizedBox(
+                        height: 20,
                       ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // Container(
-                      //   height: screenSize.width * 1 / 8,
-                      //   width: screenSize.width * 1,
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(13),
-                      //       color: Colors.white),
-                      //   child: InkWell(
-                      //     onTap: () {},
-                      //     child: Container(
-                      //       height: screenSize.width * 1 / 6.5,
-                      //       width: screenSize.width * 1,
-                      //       decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(13),
-                      //           color: Colors.white),
-                      //       child: Center(
-                      //         child: Text(
-                      //           'Employee ID',
-                      //           style: TextStyle(
-                      //               color: Color.fromARGB(255, 0, 0, 0),
-                      //               fontSize: 25),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(
+                      Text('Employee ID :' '$employeeID',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text('email :' '${widget.teacherEmail}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
+                      const SizedBox(
                         height: 20,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.01),
-                        child: Container(
-                          height: screenSize.width * 1 / 8,
-                          width: screenSize.width * 1,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                                color: Color.fromARGB(255, 238, 238, 238)),
-                            borderRadius: BorderRadius.circular(13),
-                          ),
-                          child: DropdownButton(
-                            hint: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "Select School",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 18),
-                              ),
-                            ),
-                            underline: const SizedBox(),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                            icon: const Padding(
-                              padding: EdgeInsets.all(
-                                13,
-                              ),
-                              child: Icon(Icons.arrow_drop_down,
-                                  size: 18, color: Colors.grey),
-                            ),
-                            isExpanded: true,
-                            items: [
-                              "school 1",
-                              "school 2",
-                            ].map(
-                              (val) {
-                                return DropdownMenuItem<String>(
-                                  value: val,
-                                  child: Text(val),
-                                );
-                              },
-                            ).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                var yourVar = val.toString();
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-
-                      Row(children: [
-                        Container(
-                          height: 120,
-                          width: 150,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 30),
-                                child: Container(
-                                  height: screenSize.width * 1 / 8,
-                                  width: screenSize.width * 1 / 2.5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
-                                    // gradient: LinearGradient(colors: [
-                                    //   Color.fromARGB(255, 110, 49, 252),
-                                    //   Color.fromARGB(255, 212, 0, 255)
-                                    // ]),
-                                  ),
-                                  child: TextField(
-                                      decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: 'Designation',
-
-                                          // prefixIcon: Icon(Icons.email),
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(19),
-                                            borderSide: BorderSide.none,
-                                          )),
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                      )),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 30),
-                                child: Container(
-                                  height: screenSize.width * 1 / 8,
-                                  width: screenSize.width,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
-                                    // gradient: LinearGradient(colors: [
-                                    //   Color.fromARGB(255, 110, 49, 252),
-                                    //   Color.fromARGB(255, 212, 0, 255)
-                                    // ]),
-                                  ),
-                                  child: TextField(
-                                      decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: 'Employee ID',
-
-                                          // prefixIcon: Icon(Icons.email),
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(19),
-                                            borderSide: BorderSide.none,
-                                          )),
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: CircleAvatar(
-                                radius: 50,
-                                backgroundImage: NetworkImage(
-                                    'https://via.placeholder.com/150'),
-                                backgroundColor: Colors.transparent,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 75, top: 75),
-                              child: Container(
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                ),
-                                child: Icon(
-                                  Icons.camera_alt_outlined,
-                                  color: Colors.white,
-                                ),
-                                alignment: Alignment.center,
-                              ),
-                            ),
-                          ],
-                        )
-                      ]),
-
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.01),
-                        child: Container(
-                          height: screenSize.width * 1 / 8,
-                          width: screenSize.width * 1,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                                color: Color.fromARGB(255, 238, 238, 238)),
-                            borderRadius: BorderRadius.circular(13),
-                          ),
-                          child: DropdownButton(
-                            hint: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "Select Class",
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            underline: const SizedBox(),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                            icon: const Padding(
-                              padding: EdgeInsets.all(
-                                13,
-                              ),
-                              child: Icon(Icons.arrow_drop_down,
-                                  size: 18, color: Colors.grey),
-                            ),
-                            isExpanded: true,
-                            items: [
-                              "Class 1",
-                              "Class 2",
-                              "Class 3",
-                              "Class 4",
-                              "Class 5",
-                              "Class 6",
-                              "Class 7",
-                              "Class 8",
-                              "Class 9",
-                              "Class 10",
-                              "Class 11",
-                              "Class 12",
-                            ].map(
-                              (val) {
-                                return DropdownMenuItem<String>(
-                                  value: val,
-                                  child: Text(val),
-                                );
-                              },
-                            ).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                var yourVar = val.toString();
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.white]),
-                        ),
-                        child: TextField(
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: 'Guardian Name',
-
-                                // prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(19),
-                                  borderSide: BorderSide.none,
-                                )),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            )),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: screenSize.width * 1 / 8,
-                        width: screenSize.width * 1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.white]),
-                        ),
-                        child: TextField(
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: 'Address',
-
-                                // prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(19),
-                                  borderSide: BorderSide.none,
-                                )),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            )),
-                      ),
-                      SizedBox(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.01),
+                          child: const Text('')),
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
                         height: screenSize.width * 1 / 8,
                         width: screenSize.width * 1,
                         child: TextField(
+                            controller: _bloodGroupController,
                             decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
-                                hintText: 'Enter Your Email',
+                                hintText: 'Blood Group',
 
                                 // prefixIcon: Icon(Icons.email),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide: BorderSide.none,
                                 )),
-                            style: TextStyle(
-                              color: Colors.white,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 20,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: screenSize.width * 1 / 8,
+                        width: screenSize.width * 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.white]),
+                        ),
+                        child: TextField(
+                            controller: _houseNameController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: 'House Name',
+
+                                // prefixIcon: Icon(Icons.email),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(19),
+                                  borderSide: BorderSide.none,
+                                )),
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
                               fontSize: 18,
                             )),
                       ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: screenSize.width * 1 / 8,
+                        width: screenSize.width * 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.white]),
+                        ),
+                        child: TextField(
+                            controller: _houseNumberController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                hintText: 'House Number',
 
-                     
-                      SizedBox(
+                                // prefixIcon: Icon(Icons.email),
+
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(19),
+                                  borderSide: BorderSide.none,
+                                )),
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 18,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: screenSize.width * 1 / 8,
+                        width: screenSize.width * 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.white]),
+                        ),
+                        child: TextField(
+                            controller: _placeController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                hintText: 'Place / Street',
+
+                                // prefixIcon: Icon(Icons.email),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(19),
+                                  borderSide: BorderSide.none,
+                                )),
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 18,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: screenSize.width * 1 / 8,
+                        width: screenSize.width * 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.white]),
+                        ),
+                        child: TextField(
+                            controller: _districtController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                hintText: 'District',
+
+                                // prefixIcon: Icon(Icons.email),
+
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(19),
+                                  borderSide: BorderSide.none,
+                                )),
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 18,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: screenSize.width * 1 / 8,
+                        width: screenSize.width * 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.white]),
+                        ),
+                        child: TextField(
+                            controller: _stateController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                hintText: 'State',
+
+                                // prefixIcon: Icon(Icons.email),
+
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(19),
+                                  borderSide: BorderSide.none,
+                                )),
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 18,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: screenSize.width * 1 / 8,
+                        width: screenSize.width * 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.white]),
+                        ),
+                        child: TextField(
+                            controller: _pincodeController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                hintText: 'PinCode',
+
+                                // prefixIcon: Icon(Icons.email),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(19),
+                                  borderSide: BorderSide.none,
+                                )),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 18,
+                            )),
+                      ),
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
@@ -531,18 +386,36 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                             borderRadius: BorderRadius.circular(14)),
                         child: TextButton(
                           style: TextButton.styleFrom(
-                            foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                            foregroundColor:
+                                const Color.fromARGB(255, 255, 255, 255),
                             padding: const EdgeInsets.all(9.0),
                             textStyle: const TextStyle(fontSize: 17),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) =>
-                                       SchoolTeacherHome(
-                                        schoolId: '',
-                                       ))));
+                          onPressed: () async {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: ((context) => SchoolTeacherHome(
+                            //               schoolId: '',
+                            //             ))));
+                            final addTeacherDeatils =
+                                AddExtraDetailsofTeacherModel(
+                                  teacherImage: widget.studentImage,
+                                    houseName: _houseNameController.text.trim(),
+                                    houseNumber:
+                                        _houseNameController.text.trim(),
+                                    place: _placeController.text.trim(),
+                                    district: _districtController.text.trim(),
+                                    state: _stateController.text.trim(),
+                                    pincode: _pincodeController.text.trim(),
+                                    bloodGroup:
+                                        _bloodGroupController.text.toString());
+                            await AddExtraDetailsofTeacherToFireBase()
+                                .addExtraDetailsofTeachersController(
+                                    addTeacherDeatils,
+                                    context,
+                                    widget.schoolID,
+                                    widget.teacherEmail);
                           },
                           child: const Text('Sign Up'),
                         ),
@@ -554,13 +427,13 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                           top: screenSize.width * 1 / 29,
                         ),
                         child: Row(children: [
-                          Text(
+                          const Text(
                             "Don't have an account ? ",
                             style: TextStyle(color: Colors.white),
                           ),
                           InkWell(
                             child: Container(
-                              child: Text(
+                              child: const Text(
                                 "Sign Up",
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.yellowAccent),
@@ -570,13 +443,13 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>  DujoLogin()),
+                                    builder: (context) => DujoLogin()),
                               );
                             },
                           ),
                         ]),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       )
                     ],
@@ -586,5 +459,19 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
         ]),
       ]),
     );
+  }
+
+  void getTeacherDetails() async {
+    var vari = await FirebaseFirestore.instance
+        .collection("SchoolListCollection")
+        .doc(widget.schoolID)
+        .collection("Teachers")
+        .doc(widget.teacherEmail)
+        .get();
+    setState(() {
+      teacherName = vari.data()!['teacherName'];
+      employeeID = vari.data()!['employeeID'];
+    });
+    log(vari.toString());
   }
 }

@@ -1,12 +1,19 @@
 
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dujo_offical_apk/teacher_section/attendence_section/attendence-Book/attendece_book.dart';
 import 'package:dujo_offical_apk/teacher_section/attendence_section/classTeacher_classes.dart';
 import 'package:flutter/material.dart';
 
 class SchoolTeacherHome extends StatefulWidget {
   var schoolId;
+  var teacherEmail;
+  var classID;
    SchoolTeacherHome({
     required this.schoolId,
+     required this.teacherEmail,
+     required this.classID,
     super.key});
 
   @override
@@ -14,6 +21,9 @@ class SchoolTeacherHome extends StatefulWidget {
 }
 
 class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
+  String teacherImage ='';
+  String teacherName ="";
+  String teacherClass ="";
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -25,6 +35,11 @@ class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
   }
 
   @override
+  void initState() {
+getTeacherDetails();
+getTeacherClass();
+    super.initState();
+  }
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -484,15 +499,23 @@ class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: CircleAvatar(
-                              radius: 45,
-                              backgroundImage: NetworkImage(
-                                  'https://via.placeholder.com/150'),
-                              backgroundColor: Colors.transparent,
-                            ),
-                          ),
+                          Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: 110,
+                        width: 110,
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(120)),
+                            image: DecorationImage(
+                                image: NetworkImage(teacherImage),
+                                fit: BoxFit.contain),
+                            border: Border.all(
+                                color:
+                                    const Color.fromARGB(255, 25, 205, 202))),
+                      ),
+                    ),
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child: Container(
@@ -510,9 +533,9 @@ class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         ),
-                                        child: const Center(
+                                        child:  Center(
                                           child: Text(
-                                            "Name",
+                                            teacherName,
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black),
@@ -545,9 +568,9 @@ class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         ),
-                                        child: const Center(
+                                        child:  Center(
                                           child: Text(
-                                            "Class",
+                                            teacherClass,
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black),
@@ -575,5 +598,31 @@ class _SchoolTeacherHomeState extends State<SchoolTeacherHome> {
       ]),
   
     );
+  }
+    void getTeacherDetails() async {
+    var vari = await FirebaseFirestore.instance
+        .collection("SchoolListCollection")
+        .doc(widget.schoolId)
+        .collection("Teachers")
+        .doc(widget.teacherEmail)
+        .get();
+    setState(() {
+      teacherName = vari.data()!['teacherName'];
+         teacherImage = vari.data()!['teacherImage'];
+    });
+    log(vari.toString());
+  }
+   void getTeacherClass() async {
+    var vari = await FirebaseFirestore.instance
+        .collection("SchoolListCollection")
+        .doc(widget.schoolId)
+        .collection("Classes")
+        .doc(widget.classID)
+        .get();
+    setState(() {
+      teacherClass = vari.data()!['className'];
+   
+    });
+    log(vari.toString());
   }
 }

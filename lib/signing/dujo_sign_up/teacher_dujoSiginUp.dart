@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Get_students/get_teachers_drop.dart';
+import '../siginig_section/teacher_singup/get_otp.dart';
 
 class TeacherDujoSignup extends StatelessWidget {
   var schoolID;
@@ -235,11 +236,11 @@ class TeacherDujoSignup extends StatelessWidget {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Get.to(PhoneVerificationScreen(
+                              Get.to(TeacherPhoneVerificationScreen(
                                 userEmail: emailController.text.trim(),
                                 userPassword: passwordController.text.trim(),
                                 classID: classID,
-                                studentID: studentsListValue!["id"],
+                                studentID: teachersListValue!["id"],
                                 schooilID: schoolID,
                               ));
                             }

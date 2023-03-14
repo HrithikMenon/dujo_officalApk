@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../Students_sections/homescreen/widgets/home_screen.dart';
+
 class StudentLoginSection extends StatelessWidget {
   var schoolId;
   var classID;
@@ -112,12 +114,17 @@ class StudentLoginSection extends StatelessWidget {
                   await FirebaseAuth.instance
                       .signInWithEmailAndPassword(
                           email: emailController.text.trim(),
-                          password: passwordController.text.trim())
-                      .then((value) => Get.to(SchoolStudentHomeNew(
-                            schoolID: schoolId,
+                          password: passwordController.text.trim()).then((value) => Get.to(StudentsHomeHomeScreen(
                             classID: classID,
-                            studentEmailid: emailController.text.trim(),
+                            schoolID:schoolId ,
+                            studentEmailid:emailController.text.trim() ,
+
                           )));
+                      // .then((value) => Get.to(SchoolStudentHomeNew(
+                      //       schoolID: schoolId,
+                      //       classID: classID,
+                      //       studentEmailid: emailController.text.trim(),
+                      //     )));
                 } catch (e) {
                   errorBox(context, e);
                 }
@@ -162,6 +169,8 @@ class StudentLoginSection extends StatelessWidget {
     );
   }
 
+
+}
   void errorBox(context, e) {
     showDialog(
         context: context,
@@ -172,4 +181,3 @@ class StudentLoginSection extends StatelessWidget {
           );
         });
   }
-}

@@ -11,7 +11,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class UploadImageScreen extends StatefulWidget {
-  UploadImageScreen({super.key});
+  var schoolId;
+  var classID;
+  var studentemail;
+  UploadImageScreen(
+      {required this.classID,
+      required this.schoolId,
+      required this.studentemail,
+      super.key});
 
   @override
   State<UploadImageScreen> createState() => _UploadImageScreenState();
@@ -38,7 +45,8 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                       width: 200.w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.white.withOpacity(0.13)),
+                        border:
+                            Border.all(color: Colors.white.withOpacity(0.13)),
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomCenter,
@@ -71,7 +79,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                                     // child: Image.asset(getimagePath),
                                   )
                                 : CircleAvatar(
-                                    backgroundColor:  Colors.black,
+                                    backgroundColor: Colors.black,
                                     radius: 100,
                                     backgroundImage: FileImage(
                                       File(pickeimagefile!.path!),
@@ -159,6 +167,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
           ],
         ));
   }
+
 //  PlatformFile? pickeimagefile;
 //   UploadTask? uploadTask;
   Future selectGallery() async {
@@ -184,8 +193,12 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
     // Get URL?????????????????????????
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
-    Get.off(Profile(imagepath: urlDownload,)
-    );
+    Get.off(Profile(
+      imagepath: urlDownload,
+      classID: widget.classID,
+      schoolID: widget.schoolId,
+      studentemail: widget.studentemail,
+    ));
     log("Download Link : $urlDownload");
     setState(() {
       uploadTask = null;
@@ -193,35 +206,37 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
   }
 
   Widget buildProgress() => StreamBuilder<TaskSnapshot>(
-      stream: uploadTask?.snapshotEvents,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final data = snapshot.data!;
-          double progress = data.bytesTransferred / data.totalBytes;
-          return SizedBox(
-            height: 50.h,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                LinearProgressIndicator(
-                  value: progress,
-                  backgroundColor: Colors.grey,
-                  color: Colors.green,
-                ),
-                Center(
-                  child: Text(
-                    "${(100 * progress).roundToDouble()}%",
-                    style: const TextStyle(color: Colors.white),
+        stream: uploadTask?.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data!;
+            double progress = data.bytesTransferred / data.totalBytes;
+            return SizedBox(
+              height: 50.h,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: Colors.grey,
+                    color: Colors.green,
                   ),
-                )
-              ],
-            ),
-          );
-        } else {
-          return SizedBox(height: 50.h);
-        }
-      },);
+                  Center(
+                    child: Text(
+                      "${(100 * progress).roundToDouble()}%",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return SizedBox(height: 50.h);
+          }
+        },
+      );
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////

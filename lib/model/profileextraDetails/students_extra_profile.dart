@@ -17,7 +17,7 @@ String AddExtraDetailsofStudentsModelToJson(
 
 class AddExtraDetailsofStudentsModel {
   AddExtraDetailsofStudentsModel({
-    required this.id,
+    // required this.id,
     required this.studentClass,
     required this.bloodGroup,
     required this.rollNo,
@@ -27,8 +27,8 @@ class AddExtraDetailsofStudentsModel {
     required this.studentImage,
   });
 
-  String id;
-  bool studentClass = true;
+  // String id;
+  String studentClass;
   String bloodGroup;
   String rollNo;
   String gurdianName;
@@ -38,9 +38,9 @@ class AddExtraDetailsofStudentsModel {
 
   factory AddExtraDetailsofStudentsModel.fromJson(Map<String, dynamic> json) =>
       AddExtraDetailsofStudentsModel(
-        id: json["id"] ?? '',
+        // id: json["id"] ?? '',
         gender: json["gender"] ?? '',
-        studentClass: json["studentClass"] ?? true,
+        studentClass: json["studentClass"] ?? '',
         bloodGroup: json["bloodGroup"] ?? '',
         rollNo: json["rollNo"] ?? '',
         gurdianName: json["gurdianName"] ?? '',
@@ -49,7 +49,7 @@ class AddExtraDetailsofStudentsModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        // "id": id,
         "bloodGroup": bloodGroup,
         "studentClass": studentClass,
         "studentImage": studentImage,
@@ -65,8 +65,6 @@ class AddExtraDetailsofStudentsToFireBase {
       context,
       schoolid,
       classId,
-      formatter,
-      studentName,
       studentemail) async {
     try {
       final firebase = FirebaseFirestore.instance;
@@ -77,7 +75,7 @@ class AddExtraDetailsofStudentsToFireBase {
           .doc(classId)
           .collection("Students")
           .doc(studentemail)
-          .set(productModel.toJson());
+          .set(productModel.toJson(),SetOptions(merge: true));
     } on FirebaseException catch (e) {
       print('Error ${e.message.toString()}');
     }

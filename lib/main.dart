@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -34,34 +35,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-              designSize: const Size(423.5294196844927, 925.0980565145541),
-        minTextAdapt: true,
-        splitScreenMode: true,
-      builder: (context,child) {
-        return BlocProvider(
-          create: (context) => AuthCubit(),
-          child: GetMaterialApp(
-            translations: GetxLanguage(),
-            locale: Locale('en', 'US'),
-            home: BlocBuilder<AuthCubit, AuthState>(
-              buildWhen: (oldstate,newstate){
-                return oldstate is AuthInitialState;
-              },
-              builder: (context, state) {
-                if (state is AuthLoggedInState) {
-                  return OpeningPage();
-                  
-                }else if (state is AuthLoggedOutState){
-                  return SelectLanguage();
+    return Sizer(
 
-                }
-                return OpeningPage();
-              },
-            ),
+      builder: (context,orientation,device) {
+        return ScreenUtilInit(
+                  designSize: const Size(423.5294196844927, 925.0980565145541),
+            minTextAdapt: true,
+            splitScreenMode: true,
+          builder: (context,child) {
+            return BlocProvider(
+              create: (context) => AuthCubit(),
+              child: GetMaterialApp(
+                translations: GetxLanguage(),
+                locale: Locale('en', 'US'),
+                home: BlocBuilder<AuthCubit, AuthState>(
+                  buildWhen: (oldstate,newstate){
+                    return oldstate is AuthInitialState;
+                  },
+                  builder: (context, state) {
+                    if (state is AuthLoggedInState) {
+                      return OpeningPage();
+                      
+                    }else if (state is AuthLoggedOutState){
+                      return SelectLanguage();
 
-            // home:Onboardingpage(),
-          ),
+                    }
+                    return OpeningPage();
+                  },
+                ),
+
+                // home:Onboardingpage(),
+              ),
+            );
+          }
         );
       }
     );

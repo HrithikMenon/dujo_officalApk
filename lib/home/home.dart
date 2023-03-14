@@ -28,13 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> pages = [
-    SchoolTeacherHome(schoolId: ''),
-    SchoolTeacherHome(schoolId: ''),
-    SchoolTeacherHome(schoolId: ''),
+    SchoolTeacherHome(schoolId: '',teacherEmail: '',classID: ''),
+    SchoolTeacherHome(schoolId: '',teacherEmail: '',classID: ''),
+    SchoolTeacherHome(schoolId: '',teacherEmail: '',classID: ''),
 
     //  RecordedvideosPlayList(),
     // LiveClassRoom(roomID: ''),
-   SchoolTeacherHome(schoolId: '')
+   SchoolTeacherHome(schoolId: '',teacherEmail: '',classID: '')
   ];
   // int currentIndex = 0;
   // currentindex(int index) {

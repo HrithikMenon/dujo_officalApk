@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import '../../controllers/Bloc/Phone_otp/auth_cubit.dart';
-import '../../controllers/Bloc/Phone_otp/auth_state.dart';
-import 'getPhone_otp_verify_screen.dart';
 
-class PhoneVerificationScreen extends StatefulWidget {
+import '../../../controllers/Bloc/Phone_otp/auth_cubit.dart';
+import '../../../controllers/Bloc/Phone_otp/auth_state.dart';
+import 'otp_verify.dart';
+
+
+class TeacherPhoneVerificationScreen extends StatefulWidget {
   var schooilID;
   var classID;
   var studentID;
   var userEmail;
   var userPassword;
-  PhoneVerificationScreen(
+  TeacherPhoneVerificationScreen(
       {required this.classID,
       required this.userEmail,
       required this.userPassword,
@@ -23,11 +25,11 @@ class PhoneVerificationScreen extends StatefulWidget {
       super.key});
 
   @override
-  State<PhoneVerificationScreen> createState() =>
-      _PhoneVerificationScreenState();
+  State<TeacherPhoneVerificationScreen> createState() =>
+      _TeacherPhoneVerificationScreenState();
 }
 
-class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
+class _TeacherPhoneVerificationScreenState extends State<TeacherPhoneVerificationScreen> {
   String phoneNumber = "";
 
   @override
@@ -71,7 +73,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                 BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state is AuthCodeSentState) {
-                      Get.off(GetPhoneOTPVerificationScreen(
+                      Get.off(TeacherGetPhoneOTPVerificationScreen(
                         classID:widget.classID ,
                         schooilID: widget.schooilID,
                         phoneNumber: phoneNumber,
@@ -113,13 +115,11 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
     var vari = await FirebaseFirestore.instance
         .collection("SchoolListCollection")
         .doc(widget.schooilID)
-        .collection("Classes")
-        .doc(widget.classID)
-        .collection("Students")
+        .collection("Teachers")
         .doc(widget.userEmail)
         .get();
     setState(() {
-      phoneNumber = vari.data()!['parentPhNo'.toString()];
+      phoneNumber = vari.data()!['teacherPhNo'.toString()];
     });
     log(vari.data().toString());
   }

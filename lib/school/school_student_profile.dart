@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dujo_offical_apk/model/profileextraDetails/students_extra_profile.dart';
 import 'package:dujo_offical_apk/school/school_student_home_new.dart';
 import 'package:dujo_offical_apk/signing/dujosigning.dart';
 import 'package:flutter/material.dart';
@@ -6,18 +10,29 @@ import '../signing/Get_school/get_schooil_dropList.dart';
 
 class StudentProfile extends StatefulWidget {
   var studentImage;
-  var studentName;
-  var studentAdmissionNumber;
   var studentemail;
-var classID;
-var schoolID;
-  StudentProfile({required this.studentImage, super.key});
+  var classID;
+  var schoolID;
+  StudentProfile(
+      {required this.studentImage,
+      required this.classID,
+      required this.schoolID,
+      required this.studentemail,
+      super.key});
 
   @override
   State<StudentProfile> createState() => _StudentProfileState();
 }
 
 class _StudentProfileState extends State<StudentProfile> {
+  String genderValue = "";
+  String studentAName = "";
+  String studentAdmissionNumber = "";
+  TextEditingController bloodGroupController = TextEditingController();
+  TextEditingController rollNumberController = TextEditingController();
+  TextEditingController gurdenNAmeController = TextEditingController();
+  TextEditingController studentAddressController = TextEditingController();
+
   final List<bool> _selectedSchools = <bool>[true, false, false];
 
   @override
@@ -79,9 +94,9 @@ class _StudentProfileState extends State<StudentProfile> {
               child: Column(children: [
                 Stack(
                   children: [
-                     Padding(
+                    Padding(
                       padding: EdgeInsets.only(top: 20),
-                      child:  Container(
+                      child: Container(
                         height: 160,
                         width: 160,
                         decoration: BoxDecoration(
@@ -121,7 +136,7 @@ class _StudentProfileState extends State<StudentProfile> {
                   padding: const EdgeInsets.only(left: 40, right: 40),
                   child: Column(
                     children: [
-                       Text('Name :' + '${widget.studentName}',
+                      Text('Name :' + '${studentAName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -129,22 +144,19 @@ class _StudentProfileState extends State<StudentProfile> {
                       const SizedBox(
                         height: 20,
                       ),
-                       Text('Student email :' + '${widget.studentemail}',
+                      Text('Student email :' + '${widget.studentemail}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                           )),
-
                       const SizedBox(
                         height: 20,
                       ),
-
-                       Text('Admission Number :' + '${widget.studentAdmissionNumber}',
+                      Text('Admission Number :' + '${studentAdmissionNumber}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                           )),
-
                       const SizedBox(
                         height: 20,
                       ),
@@ -185,6 +197,7 @@ class _StudentProfileState extends State<StudentProfile> {
                                 // ]),
                               ),
                               child: TextField(
+                                  controller: bloodGroupController,
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.white,
@@ -214,6 +227,7 @@ class _StudentProfileState extends State<StudentProfile> {
                                 // ]),
                               ),
                               child: TextField(
+                                  controller: rollNumberController,
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.white,
@@ -282,7 +296,7 @@ class _StudentProfileState extends State<StudentProfile> {
                             ).toList(),
                             onChanged: (val) {
                               setState(() {
-                                var yourVar = val.toString();
+                                genderValue = val.toString();
                               });
                             },
                           ),
@@ -300,6 +314,7 @@ class _StudentProfileState extends State<StudentProfile> {
                               colors: [Colors.white, Colors.white]),
                         ),
                         child: TextField(
+                            controller: gurdenNAmeController,
                             decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
@@ -318,9 +333,6 @@ class _StudentProfileState extends State<StudentProfile> {
                       const SizedBox(
                         height: 20,
                       ),
-
-
-
                       Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(29)),
@@ -330,7 +342,8 @@ class _StudentProfileState extends State<StudentProfile> {
                           padding: EdgeInsets.only(
                               left: screenSize.width * 1 / 15,
                               top: screenSize.width * 1 / 20),
-                          child: const TextField(
+                          child: TextField(
+                            controller: studentAddressController,
                             maxLines: 8, //or null
                             decoration:
                                 InputDecoration.collapsed(hintText: "Address"),
@@ -340,9 +353,6 @@ class _StudentProfileState extends State<StudentProfile> {
                       const SizedBox(
                         height: 20,
                       ),
-        
-
-              
                       Container(
                         height: screenSize.width * 1 / 9,
                         width: screenSize.width * 1 / 1.9,
@@ -356,10 +366,56 @@ class _StudentProfileState extends State<StudentProfile> {
                             padding: const EdgeInsets.all(9.0),
                             textStyle: const TextStyle(fontSize: 17),
                           ),
-                          onPressed: () {
-                 
+                          onPressed: () async {
+                            log(classesListValue!["id"]);
+                            final studenDetails =
+                                AddExtraDetailsofStudentsModel(
+                                    // id: '',
+                                    studentClass: classesListValue!["id"],
+                                    bloodGroup:
+                                        bloodGroupController.text.trim(),
+                                    rollNo: rollNumberController.text.trim(),
+                                    gurdianName:
+                                        gurdenNAmeController.text.trim(),
+                                    address:
+                                        studentAddressController.text.trim(),
+                                    gender: genderValue,
+                                    studentImage: widget.studentImage);
+
+                            AddExtraDetailsofStudentsToFireBase()
+                                .addExtraDetailsofStudentsController(
+                                    studenDetails,
+                                    context,
+                                    widget.schoolID,
+                                    widget.classID,
+                                    widget.studentemail)
+                                .then((value) => showDialog(
+                                      context: context,
+                                      barrierDismissible:
+                                          false, // user must tap button!
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('Message'),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: <Widget>[
+                                                Text('Successfully updated'),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('ok'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ));
                           },
-                          child: const Text('Sign Up'),
+                          child: const Text('Update My profile'),
                         ),
                       ),
                       SizedBox(height: screenSize.width * 1 / 100),
@@ -401,5 +457,21 @@ class _StudentProfileState extends State<StudentProfile> {
         ]),
       ]),
     );
+  }
+
+  void getStudentDetails() async {
+    var vari = await FirebaseFirestore.instance
+        .collection("SchoolListCollection")
+        .doc(widget.schoolID)
+        .collection("Classes")
+        .doc(widget.classID)
+        .collection("Students")
+        .doc(widget.studentemail)
+        .get();
+    setState(() {
+      studentAName = vari.data()!['studentName'];
+      studentAdmissionNumber = vari.data()!['admissionNumber'];
+    });
+    log(vari.toString());
   }
 }

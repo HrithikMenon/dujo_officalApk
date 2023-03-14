@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:dujo_offical_apk/collage/collage_parent_profile.dart';
@@ -12,15 +10,23 @@ import 'package:flutter/material.dart';
 import 'collage/collage_faculty_profile.dart';
 
 class Profile extends StatelessWidget {
-var imagepath;
-   Profile({required this.imagepath, super.key});
+  var imagepath;
+  var classID;
+  var schoolID;
+  var studentemail;
+
+  Profile(
+      {required this.imagepath,
+      required this.classID,
+      required this.schoolID,
+      required this.studentemail,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
     log(imagepath);
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      
         appBar: AppBar(
           title: Text('Create Profile'),
         ),
@@ -39,14 +45,11 @@ var imagepath;
                     decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color:
-                                Colors.black.withOpacity(0.5),
-                            spreadRadius: 5, 
-                            blurRadius: 7, 
-                            offset: Offset(0, 2), 
-                            
+                            color: Colors.black.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 2),
                           ),
-                        
                         ],
                         gradient: LinearGradient(
                           colors: [
@@ -77,7 +80,12 @@ var imagepath;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => StudentProfile(studentImage: imagepath,)),
+                                  builder: (context) => StudentProfile(
+                                        studentImage: imagepath,
+                                        classID: classID,
+                                        schoolID: schoolID,
+                                        studentemail: studentemail,
+                                      )),
                             );
                           },
                           child: Container(
@@ -120,8 +128,11 @@ var imagepath;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      SchoolTeachersProfile()),
+                                  builder: (context) => SchoolTeachersProfile(
+                                        studentImage: imagepath,
+                                        schoolID: schoolID,
+                                        teacherEmail: studentemail,
+                                      )),
                             );
                           },
                           child: Container(
@@ -146,14 +157,11 @@ var imagepath;
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color:
-                              Colors.black.withOpacity(0.5), 
-                          spreadRadius: 5, 
-                          blurRadius: 7, 
-                          offset: Offset(0, 2), 
-                          
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 2),
                         ),
-                        
                       ],
                       gradient: LinearGradient(
                         colors: [
@@ -242,7 +250,6 @@ var imagepath;
                     ],
                   ),
                 ),
-            
                 SizedBox(
                   height: 30,
                 ),
