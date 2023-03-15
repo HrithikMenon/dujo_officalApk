@@ -1,13 +1,13 @@
 import 'package:dujo_offical_apk/controllers/Bloc/Phone_otp/auth_cubit.dart';
 import 'package:dujo_offical_apk/controllers/Bloc/Phone_otp/auth_state.dart';
+import 'package:dujo_offical_apk/controllers/database/database_hive.dart';
 import 'package:dujo_offical_apk/controllers/get_schoolList/getx_language.dart';
-import 'package:dujo_offical_apk/school/school_student_profile.dart';
-import 'package:dujo_offical_apk/school/uploadImage%20_to_firebase.dart';
+
 
 import 'package:dujo_offical_apk/selct_language.dart';
 import 'package:dujo_offical_apk/signing/appLoginInterface.dart';
 import 'package:dujo_offical_apk/widget/permission.dart';
-
+import 'package:hive_flutter/adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +18,7 @@ import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 bool? seenonboard;
+late Box<DBStudentList> studentdataDB;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -25,8 +26,13 @@ Future<void> main() async {
   );
   SharedPreferences pref = await SharedPreferences.getInstance();
   seenonboard = pref.getBool('seenonboard') ?? false;
-    ScreenUtil.ensureScreenSize();
-      requestpermission();
+  ScreenUtil.ensureScreenSize();
+  requestpermission();
+  await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(DBStudentListAdapter().typeId)) {
+    Hive.registerAdapter(DBStudentListAdapter());
+  }
+  studentdataDB = await Hive.openBox<DBStudentList>('studentlist');
   runApp(MyApp());
 }
 
@@ -35,30 +41,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-
-      builder: (context,orientation,device) {
-        return ScreenUtilInit(
-                  designSize: const Size(423.5294196844927, 925.0980565145541),
-            minTextAdapt: true,
-            splitScreenMode: true,
-          builder: (context,child) {
+    return Sizer(builder: (context, orientation, device) {
+      return ScreenUtilInit(
+          designSize: const Size(423.5294196844927, 925.0980565145541),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) {
             return BlocProvider(
               create: (context) => AuthCubit(),
               child: GetMaterialApp(
                 translations: GetxLanguage(),
                 locale: Locale('en', 'US'),
                 home: BlocBuilder<AuthCubit, AuthState>(
-                  buildWhen: (oldstate,newstate){
+                  buildWhen: (oldstate, newstate) {
                     return oldstate is AuthInitialState;
                   },
                   builder: (context, state) {
                     if (state is AuthLoggedInState) {
                       return OpeningPage();
-                      
-                    }else if (state is AuthLoggedOutState){
+                    } else if (state is AuthLoggedOutState) {
                       return SelectLanguage();
-
                     }
                     return OpeningPage();
                   },
@@ -67,9 +69,7 @@ class MyApp extends StatelessWidget {
                 // home:Onboardingpage(),
               ),
             );
-          }
-        );
-      }
-    );
+          });
+    });
   }
 }

@@ -14,10 +14,13 @@ class UploadImageScreen extends StatefulWidget {
   var schoolId;
   var classID;
   var studentemail;
+    var studentID;
+
   UploadImageScreen(
       {required this.classID,
       required this.schoolId,
       required this.studentemail,
+            required this.studentID,
       super.key});
 
   @override
@@ -194,6 +197,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     Get.off(Profile(
+      studentID: widget.schoolId,
       imagepath: urlDownload,
       classID: widget.classID,
       schoolID: widget.schoolId,

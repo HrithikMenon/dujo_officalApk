@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:dujo_offical_apk/collage/collage_parent_profile.dart';
 import 'package:dujo_offical_apk/collage/collage_student_profile.dart';
+import 'package:dujo_offical_apk/school/school_guardian_profile.dart';
 import 'package:dujo_offical_apk/school/school_parent_profile.dart';
 import 'package:dujo_offical_apk/school/school_student_profile.dart';
 import 'package:dujo_offical_apk/school/school_teacher_profile.dart';
+import 'package:dujo_offical_apk/signing/Get_students/get_students_drop_downlist.dart';
 import 'package:flutter/material.dart';
 
 import 'collage/collage_faculty_profile.dart';
@@ -14,12 +16,14 @@ class Profile extends StatelessWidget {
   var classID;
   var schoolID;
   var studentemail;
+  var studentID;
 
   Profile(
       {required this.imagepath,
       required this.classID,
       required this.schoolID,
       required this.studentemail,
+      required this.studentID,
       super.key});
 
   @override
@@ -107,7 +111,13 @@ class Profile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SchoolParentProfile()),
+                                  builder: (context) => SchoolParentProfile(
+                                    useremail: studentemail,
+                                        imagepath: imagepath,
+                                        classID: classID,
+                                        schoolID: schoolID,
+                                        studentIDD: studentsListValue!['id'],
+                                      )),
                             );
                           },
                           child: Container(
@@ -121,6 +131,34 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
+                          height: 20,
+                        ),
+                      
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SchoolGuardian(
+                                    useremail: studentemail,
+                                        imagepath: imagepath,
+                                        classID: classID,
+                                        schoolID: schoolID,
+                                        studentIDD: studentsListValue!['id'],
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            height: 35,
+                            width: screenSize.width / 2,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: Center(child: Text("CREATE GUARDIAN PROFILE")),
+                          ),
+                        ),
+                            SizedBox(
                           height: 20,
                         ),
                         InkWell(

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dujo_offical_apk/Students_sections/homescreen/widgets/student_data.dart';
+import 'package:dujo_offical_apk/home/student_home/Students_sections/homescreen/widgets/student_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

@@ -1,5 +1,5 @@
 
-import 'package:dujo_offical_apk/Students_sections/constants.dart';
+import 'package:dujo_offical_apk/home/student_home/Students_sections/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

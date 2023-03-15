@@ -119,6 +119,7 @@ class TeacherGetPhoneOTPVerificationScreen extends StatelessWidget {
                                   child: const Text('ok'),
                                   onPressed: () {
                                     Get.offAll(UploadImageScreen(
+                                      studentID: '',
                                       classID: classID,
                                       schoolId: schooilID,
                                       studentemail: userEmail,

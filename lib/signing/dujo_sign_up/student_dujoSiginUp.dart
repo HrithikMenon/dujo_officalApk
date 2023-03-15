@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:dujo_offical_apk/signing/Get_students/get_students_drop_downlist.dart';
-import 'package:dujo_offical_apk/signing/phone_otp/newPhone_otp_screen.dart';
+import 'package:dujo_offical_apk/signing/phone_otp/Student_otp/student_verify_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../phone_otp/Student_otp/student_get_otp_verify_screen.dart';
 
 class StuentDujoSignup extends StatelessWidget {
   var schoolID;
@@ -227,7 +229,7 @@ class StuentDujoSignup extends StatelessWidget {
                         width: screenSize.width * 1 / 1.5,
                         decoration: BoxDecoration(
                             color: Colors.blue,
-                            borderRadius: BorderRadius.circular(14)),
+                            borderRadius: BorderRadius.circular(14)), 
                         child: TextButton(
                           style: TextButton.styleFrom(
                             foregroundColor:
@@ -237,7 +239,7 @@ class StuentDujoSignup extends StatelessWidget {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Get.to(PhoneVerificationScreen(
+                              Get.to(StudentPhoneVerificationScreen(
                                 userEmail: emailController.text.trim(),
                                 userPassword: passwordController.text.trim(),
                                 classID: classID,

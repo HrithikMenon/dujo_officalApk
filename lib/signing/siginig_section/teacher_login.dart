@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../home/teacher_home/teacher_home_screen.dart';
+
 class TeacherLoginSection extends StatelessWidget {
   TextEditingController teacheridController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -123,7 +125,7 @@ class TeacherLoginSection extends StatelessWidget {
                           password: passwordController.text.trim())
                       .then(
                         (value) => Get.to(
-                        SchoolTeacherHome(schoolId: schoolId,teacherEmail: teacheridController.text.trim(),classID:classID ,)
+                        TeacherHomeScreen(classID:classID ,schoolId:schoolId ,teacherEmail:teacheridController.text.trim() ),
                         ),
                       );
        

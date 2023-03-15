@@ -1,10 +1,10 @@
 import 'package:dujo_offical_apk/signing/Get_students/get_students_drop_downlist.dart';
-import 'package:dujo_offical_apk/signing/phone_otp/newPhone_otp_screen.dart';
+import 'package:dujo_offical_apk/signing/phone_otp/Student_otp/student_verify_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Get_students/get_teachers_drop.dart';
-import '../siginig_section/teacher_singup/get_otp.dart';
+import '../phone_otp/teacher_otp/get_otp.dart';
 
 class TeacherDujoSignup extends StatelessWidget {
   var schoolID;

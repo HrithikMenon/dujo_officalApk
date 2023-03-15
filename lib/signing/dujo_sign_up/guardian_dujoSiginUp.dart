@@ -3,11 +3,12 @@
 import 'dart:developer';
 
 import 'package:dujo_offical_apk/signing/Get_students/get_students_drop_downlist.dart';
-import 'package:dujo_offical_apk/signing/phone_otp/newPhone_otp_screen.dart';
+import 'package:dujo_offical_apk/signing/phone_otp/Student_otp/student_verify_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Get_students/get_teachers_drop.dart';
+import '../phone_otp/guardian_otp/guardian_get_otp.dart';
 
 class GuardianDujoSignup extends StatelessWidget {
   var schoolID;
@@ -241,7 +242,7 @@ class GuardianDujoSignup extends StatelessWidget {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Get.to(PhoneVerificationScreen(
+                              Get.to(GuardianPhoneVerificationScreen(
                                 userEmail: emailController.text.trim(),
                                 userPassword: passwordController.text.trim(),
                                 classID: classID,

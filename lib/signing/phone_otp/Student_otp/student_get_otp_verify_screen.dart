@@ -8,17 +8,18 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../controllers/Bloc/Phone_otp/auth_cubit.dart';
-import '../../controllers/Bloc/Phone_otp/auth_state.dart';
+import '../../../controllers/Bloc/Phone_otp/auth_cubit.dart';
+import '../../../controllers/Bloc/Phone_otp/auth_state.dart';
 
-class GetPhoneOTPVerificationScreen extends StatelessWidget {
+
+class StudentGetPhoneOTPVerificationScreen extends StatelessWidget {
   var schooilID;
   var classID;
   var phoneNumber;
   var userEmail;
   var userPassword;
   final otpController = TextEditingController();
-  GetPhoneOTPVerificationScreen(
+  StudentGetPhoneOTPVerificationScreen(
       {required this.phoneNumber,
       required this.userEmail,
       required this.userPassword,
@@ -117,6 +118,7 @@ class GetPhoneOTPVerificationScreen extends StatelessWidget {
                                   child: const Text('ok'),
                                   onPressed: () {
                                     Get.offAll(UploadImageScreen(
+                                      studentID: '',
                                       classID: classID,
                                       schoolId: schooilID,
                                       studentemail: userEmail,

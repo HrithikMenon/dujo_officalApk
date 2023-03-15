@@ -1,33 +1,36 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dujo_offical_apk/signing/phone_otp/parents_otp/verify_parent_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import '../../controllers/Bloc/Phone_otp/auth_cubit.dart';
-import '../../controllers/Bloc/Phone_otp/auth_state.dart';
-import 'getPhone_otp_verify_screen.dart';
+import '../../../controllers/Bloc/Phone_otp/auth_cubit.dart';
+import '../../../controllers/Bloc/Phone_otp/auth_state.dart';
 
-class PhoneVerificationScreen extends StatefulWidget {
+class ParentPhoneVerificationScreen extends StatefulWidget {
   var schooilID;
   var classID;
   var studentID;
   var userEmail;
   var userPassword;
-  PhoneVerificationScreen(
+  var studentId;
+  ParentPhoneVerificationScreen(
       {required this.classID,
       required this.userEmail,
       required this.userPassword,
       this.schooilID,
       required this.studentID,
+      required this.studentId,
       super.key});
 
   @override
-  State<PhoneVerificationScreen> createState() =>
-      _PhoneVerificationScreenState();
+  State<ParentPhoneVerificationScreen> createState() =>
+      Student_PhoneVerificationScreenState();
 }
 
-class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
+class Student_PhoneVerificationScreenState
+    extends State<ParentPhoneVerificationScreen> {
   String phoneNumber = "";
 
   @override
@@ -38,6 +41,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+        log("schoolID?>>>>>>>>>>>>>${widget.schooilID}");
     log("number?>>>>>>>>>>>>>${phoneNumber}");
     return Scaffold(
         body: SafeArea(
@@ -71,8 +75,9 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                 BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state is AuthCodeSentState) {
-                      Get.off(GetPhoneOTPVerificationScreen(
-                        classID:widget.classID ,
+                      Get.off(ParentGetPhoneOTPVerificationScreen(
+                        studentID: widget.studentID,
+                        classID: widget.classID,
                         schooilID: widget.schooilID,
                         phoneNumber: phoneNumber,
                         userEmail: widget.userEmail,
@@ -113,13 +118,12 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
     var vari = await FirebaseFirestore.instance
         .collection("SchoolListCollection")
         .doc(widget.schooilID)
-        .collection("Classes")
-        .doc(widget.classID)
-        .collection("Students")
+        .collection("Students_Parents")
         .doc(widget.userEmail)
         .get();
+
     setState(() {
-      phoneNumber = vari.data()!['parentPhNo'.toString()];
+      phoneNumber = vari.data()!['parentPhoneNumber'.toString()];
     });
     log(vari.data().toString());
   }
