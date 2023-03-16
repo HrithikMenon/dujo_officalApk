@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dujo_offical_apk/home/student_home/Students_sections/homescreen/widgets/student_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -118,15 +118,15 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                       children: [
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/quiz.svg',
-                          title: 'Take Quiz',
+                          icon: 'assets/icons/Exams.svg',
+                          title: 'Exams',
                         ),
                         HomeCard(
                           onPress: () {
                             // Navigator.pushNamed(
                             //     context, AssignmentScreen.routeName);
                           },
-                          icon: 'assets/images/icons/assignment.svg',
+                          icon: 'assets/icons/assignment.svg',
                           title: 'Assignments',
                         ),
                       ],
@@ -136,12 +136,12 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                       children: [
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/holiday.svg',
-                          title: 'Holidays',
+                          icon: 'assets/icons/homework.svg',
+                          title: 'HomeWork',
                         ),
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/timetable.svg',
+                          icon: 'assets/icons/timetable.svg',
                           title: 'Time Table',
                         ),
                       ],
@@ -151,7 +151,22 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                       children: [
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/result.svg',
+                          icon: 'assets/icons/teacher.svg',
+                          title: 'Teachers ',
+                        ),
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/subject.svg',
+                          title: 'Subjects',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/result.svg',
                           title: 'Result',
                         ),
                         HomeCard(
@@ -159,8 +174,8 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                             // Navigator.pushNamed(
                             //     context, DateSheetScreen.routeName);
                           },
-                          icon: 'assets/images/icons/datesheet.svg',
-                          title: 'DateSheet',
+                          icon: 'assets/icons/project.svg',
+                          title: 'Projects',
                         ),
                       ],
                     ),
@@ -169,13 +184,13 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                       children: [
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/ask.svg',
-                          title: 'Ask',
+                          icon: 'assets/icons/materials.svg',
+                          title: 'Study \n Materials',
                         ),
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/gallery.svg',
-                          title: 'Gallery',
+                          icon: 'assets/icons/class.svg',
+                          title: 'Special \n Classes',
                         ),
                       ],
                     ),
@@ -184,28 +199,103 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                       children: [
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/resume.svg',
+                          icon: 'assets/icons/live.svg',
+                          title: 'Live Classes',
+                        ),
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/record.svg',
+                          title: 'Recorded \n Classes',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/attendence.svg',
+                          title: 'Attendence',
+                        ),
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/progressreport.svg',
+                          title: 'Progress\n Report',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/achieve.svg',
+                          title: 'Achievement',
+                        ),
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/Schoalrship.svg',
+                          title: 'ScholarShip',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/holiday.svg',
+                          title: 'School\n Calender',
+                        ),
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/instruction.svg',
+                          title: 'General \n Instruction',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/days.svg',
+                          title: 'Important \n Days',
+                        ),
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/notices.svg',
+                          title: 'Notices',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/ask.svg',
+                          title: 'Complaints & \nSuggetions ',
+                        ),
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/Fees.svg',
+                          title: 'Fees',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        HomeCard(
+                          onPress: () {},
+                          icon: 'assets/icons/resume.svg',
                           title: 'Leave\nApplication',
                         ),
                         HomeCard(
                           onPress: () {},
-                          icon: 'assets/images/icons/lock.svg',
-                          title: 'Change\nPassword',
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        HomeCard(
-                          onPress: () {},
-                          icon: 'assets/images/icons/event.svg',
+                          icon: 'assets/icons/event.svg',
                           title: 'Events',
-                        ),
-                        HomeCard(
-                          onPress: () {},
-                          icon: 'assets/images/icons/logout.svg',
-                          title: 'Logout',
                         ),
                       ],
                     ),

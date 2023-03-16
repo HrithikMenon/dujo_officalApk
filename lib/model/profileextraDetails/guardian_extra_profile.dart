@@ -100,7 +100,8 @@ class AddExtraDetailsofGuardianToFireBase {
                     ],
                   );
                 },
-              ))
+              ),
+              )
           .then((value) => Get.offAll(OpeningPage()));
     } on FirebaseException catch (e) {
       print('Error ${e.message.toString()}');

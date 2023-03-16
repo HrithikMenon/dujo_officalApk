@@ -175,6 +175,19 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                       const SizedBox(
                         height: 20,
                       ),
+                      SizedBox(
+                          height: screenSize.width * 1 / 8,
+                          width: screenSize.width * 1,
+                          child: const Text(
+                            "Subjects",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 20,
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Container(
                         height: screenSize.width * 1 / 8,
                         width: screenSize.width * 1,
@@ -400,7 +413,7 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
                             //             ))));
                             final addTeacherDeatils =
                                 AddExtraDetailsofTeacherModel(
-                                  teacherImage: widget.studentImage,
+                                    teacherImage: widget.studentImage,
                                     houseName: _houseNameController.text.trim(),
                                     houseNumber:
                                         _houseNameController.text.trim(),
@@ -474,4 +487,40 @@ class _SchoolTeachersProfileState extends State<SchoolTeachersProfile> {
     });
     log(vari.toString());
   }
+}
+
+getsubjects(BuildContext context) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Select Subject'),
+        content: SingleChildScrollView(
+            child: ListView.separated(
+                itemBuilder: (context, index) {
+                  GestureDetector(
+                    onTap: (){
+                       
+                    },
+                    child: Container(
+                      
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return Divider();
+                },
+                itemCount: 10)),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

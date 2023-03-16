@@ -1,119 +1,95 @@
-
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dujo_offical_apk/home/teacher_home/teacher_addlist_of_class.dart';
+import 'package:dujo_offical_apk/model/getClassesList_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../student_home/Students_sections/constants.dart';
 import 'widgets/card_container.dart';
 
-
 class TeacherHomeScreen extends StatefulWidget {
-   var schoolId;
+  var schoolId;
   var teacherEmail;
   var classID;
-   TeacherHomeScreen({
-        required this.schoolId,
-     required this.teacherEmail,
-     required this.classID,
-    super.key});
-static String routeName = 'TeacherHome';
+  TeacherHomeScreen(
+      {required this.schoolId,
+      required this.teacherEmail,
+      required this.classID,
+      super.key});
+  static String routeName = 'TeacherHome';
 
   @override
-
   State<TeacherHomeScreen> createState() => _TeacherHomeScreenState();
 }
 
 class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
-    String teacherImage ='';
-  String teacherName ="";
-  String teacherClass ="";
+  String teacherImage = '';
+  String teacherName = "";
+  String teacherClass = "";
   @override
   void initState() {
- getTeacherDetails();
- getTeacherClass();
+    getTeacherDetails();
+    getTeacherClass();
     super.initState();
   }
+
   Widget build(BuildContext context) {
-    
-    return Scaffold(body: Column(
+    return Scaffold(
+      body: Column(
         children: [
-          
-          
           Container(
             width: 100.w,
             height: 50.h,
-            padding:  EdgeInsets.all(kDefaultPadding),
+            padding: EdgeInsets.all(kDefaultPadding),
             child: ListView(
-           
               children: [
-                    Center(
-                      child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: [
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
+                        children: [
                           ParentName(
                             parentName: 'Teacher',
                           ),
-                            kHalfSizedBox,
-                      //  kHalfSizedBox,
-                      //                   StudentPicture(
-                      //                       picAddress: 'assets/images/student_profile.jpeg',
-                      //                       onPress: () {
-                            
-                      //                         // Navigator.pushNamed(
-                      //                         //     context, MyProfileScreen.routeName);
-                      //                       }),
                           kHalfSizedBox,
-                          StudentClass(
-                              studentClass: teacherName),
                           kHalfSizedBox,
-                          // StudentYear(studentYear: '2020-2021'),
+                          StudentClass(studentClass: teacherName),
+                          kHalfSizedBox,
                         ],
                       ),
                       kHalfSizedBox,
-                      StudentPicture(
-                          picAddress: teacherImage,
-                          onPress: () {
-                            
-                            // Navigator.pushNamed(
-                            //     context, MyProfileScreen.routeName);
-                          }),
-                                      ],
-                                    ),
-                    ),
-
-                sizedBox,
-                  Column(
-                    children: [
-                      StudentDataCard(
-                          onPress: () {
-                            
-                          },
-                          title: 'Class Name',
-                          value: teacherClass,
-                        ),
+                      StudentPicture(picAddress: teacherImage, onPress: () {}),
                     ],
                   ),
+                ),
+                sizedBox,
+                Column(
+                  children: [
+                    StudentDataCard(
+                      onPress: () {},
+                      title: 'Class Name',
+                      value: teacherClass,
+                    ),
+                  ],
+                ),
                 sizedBox,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     StudentDataCard(
-                      onPress: () {
-                        
-                      },
+                      onPress: () {},
                       title: 'Attendance \n Total',
                       value: '90.02%',
                     ),
                     StudentDataCard(
                       onPress: () {
-                        
-                       // Navigator.pushNamed(context, FeeScreen.routeName);
+                        // Navigator.pushNamed(context, FeeScreen.routeName);
                       },
                       title: 'Total Fees',
                       value: '600\$',
@@ -135,7 +111,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
               child: SingleChildScrollView(
                 //for padding
                 physics: const BouncingScrollPhysics(),
-                child:  Column(
+                child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -174,9 +150,15 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         HomeCard(
-                          onPress: () {},
+                          onPress: () {
+                 Get.to(AllClassesListViewForTeacher(
+                  classID:widget.classID ,
+                  schoolID:widget.schoolId ,
+                  teacherID: widget.teacherEmail,
+                 ));
+                          },
                           icon: 'assets/icons/teacher.svg',
-                          title: 'Teachers ',
+                          title: 'Subjects',
                         ),
                         HomeCard(
                           onPress: () {},
@@ -233,7 +215,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                         ),
                       ],
                     ),
-                      Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         HomeCard(
@@ -347,7 +329,8 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
       ),
     );
   }
-    void getTeacherDetails() async {
+
+  void getTeacherDetails() async {
     var vari = await FirebaseFirestore.instance
         .collection("SchoolListCollection")
         .doc(widget.schoolId)
@@ -356,11 +339,12 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
         .get();
     setState(() {
       teacherName = vari.data()!['teacherName'];
-         teacherImage = vari.data()!['teacherImage'];
+      teacherImage = vari.data()!['teacherImage'];
     });
-    log(vari.toString());
+    log(teacherImage.toString());
   }
-   void getTeacherClass() async {
+
+  void getTeacherClass() async {
     var vari = await FirebaseFirestore.instance
         .collection("SchoolListCollection")
         .doc(widget.schoolId)
@@ -369,10 +353,11 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
         .get();
     setState(() {
       teacherClass = vari.data()!['className'];
-   
     });
     log(vari.toString());
   }
+
+
 }
 
 class HomeCard extends StatelessWidget {
