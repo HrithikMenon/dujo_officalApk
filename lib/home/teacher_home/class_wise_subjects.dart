@@ -60,6 +60,7 @@ class _ClassWiseSubjectState extends State<ClassWiseSubject> {
                               color: Colors.amber,
                               child: Center(
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(data.subject),
                                     TextButton.icon(onPressed: ()async{
@@ -74,7 +75,20 @@ class _ClassWiseSubjectState extends State<ClassWiseSubject> {
                                   //     'subject$index':data.id,
                                   //   })
                                   // ,SetOptions(merge: true));
-                                  }, icon: Icon(Icons.add), label: Text('add'))
+                                  }, icon: Icon(Icons.add), label: Text('add')),
+                                       TextButton.icon(onPressed: ()async{
+                                  //     var listofsubject=[];   
+                                  //       FirebaseFirestore.instance
+                                  // .collection("SchoolListCollection")
+                                  // .doc(widget.schoolID)
+                                  // .collection("Teachers")
+                                  // .doc(widget.teacherID)
+                                  // .set(
+                                  //   listofsubject.add({
+                                  //     'subject$index':data.id,
+                                  //   })
+                                  // ,SetOptions(merge: true));
+                                  }, icon: Icon(Icons.delete), label: Text('remove'))
                                   ],
                                 ),
                               ),
