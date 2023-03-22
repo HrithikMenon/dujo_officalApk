@@ -6,8 +6,10 @@ import 'package:dujo_offical_apk/signing/siginig_section/student_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../home/teacher_home/teacher_home_screen.dart';
+import '../../widget/button_container.dart';
 
 class TeacherLoginSection extends StatefulWidget {
   var schoolId;
@@ -37,6 +39,68 @@ class _TeacherLoginSectionState extends State<TeacherLoginSection> {
     return SizedBox(
       height: 300,
       width: double.infinity,
+      child:  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+            
+              },
+              child: Container(
+                color: Colors.white.withOpacity(0.2),
+                height: 100,
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Teachers",
+                      style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+            GestureDetector(
+              onTap: () {
+               gotoClassTeacherScreen(context);
+              },
+              child: Container(
+              color: Colors.white.withOpacity(0.2),
+                height: 100,
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Class Teachers",
+                      style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+          ],
+        ),
+    );
+  }
+  gotoClassTeacherScreen(BuildContext context){
+  return showBottomSheet(context: context, builder: (context) {
+    return Container(
+      color: Colors.transparent,
+      
+      height: 400,
+      width: double.infinity,
       child: Column(
         children: [
           Padding(
@@ -51,13 +115,13 @@ class _TeacherLoginSectionState extends State<TeacherLoginSection> {
                   decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: 'Enter your ID',
+                      hintText: 'Enter your Email',
                       prefixIcon: Icon(Icons.mail_lock_sharp),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide.none,
                       )),
-                  style: TextStyle(fontSize: 20)),
+                  style: TextStyle(fontSize: 20,color: Colors.black)),
             ),
           ),
           SizedBox(
@@ -86,7 +150,7 @@ class _TeacherLoginSectionState extends State<TeacherLoginSection> {
                   hintStyle: TextStyle(fontSize: 19),
                   hintText: 'Password',
                 ),
-                style: TextStyle(fontSize: 19),
+                style: TextStyle(fontSize: 19,color: Colors.black),
                 obscureText: true,
               ),
             ),
@@ -99,15 +163,11 @@ class _TeacherLoginSectionState extends State<TeacherLoginSection> {
               padding: EdgeInsets.only(left: widget.screenSize.width * 1 / 1.9),
               child: Text(
                 "Forgot Password ?",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
             ),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => ForgotPassword(),
-              //     ));
+
             },
           ),
           SizedBox(height: widget.screenSize.width * 1 / 36),
@@ -151,13 +211,13 @@ class _TeacherLoginSectionState extends State<TeacherLoginSection> {
             child: Row(children: [
               Text(
                 "Don't have an account ? ",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black,),
               ),
               InkWell(
                 child: Container(
                   child: Text(
                     "Sign Up",
-                    style: TextStyle(fontSize: 19, color: Colors.yellowAccent),
+                    style: TextStyle(fontSize: 19, color: Colors.red),
                   ),
                 ),
                 onTap: () async {
@@ -168,7 +228,13 @@ class _TeacherLoginSectionState extends State<TeacherLoginSection> {
             ]),
           ),
         ],
-      ),
-    );
-  }
+),
+);
+  },);
+
+}
+}
+
+gotoTeacherScreen(BuildContext context){
+
 }

@@ -40,41 +40,41 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
   void retrieveData() async {
     mon = await FirebaseFirestore.instance
         .collection('SchoolListCollection')
-        .doc('mthssCheng16767')
+        .doc(widget.schoolID)
         .collection('Classes')
-        .doc('class1A@mthss')
+        .doc(widget.classID)
         .collection('TimeTables')
         .doc('Monday')
         .get();
     tues = await FirebaseFirestore.instance
         .collection('SchoolListCollection')
-        .doc('mthssCheng16767')
+        .doc(widget.schoolID)
         .collection('Classes')
-        .doc('class1A@mthss')
+        .doc(widget.classID)
         .collection('TimeTables')
         .doc('Tuesday')
         .get();
     wed = await FirebaseFirestore.instance
         .collection('SchoolListCollection')
-        .doc('mthssCheng16767')
+        .doc(widget.schoolID)
         .collection('Classes')
-        .doc('class1A@mthss')
+        .doc(widget.classID)
         .collection('TimeTables')
         .doc('Wednesday')
         .get();
     thur = await FirebaseFirestore.instance
         .collection('SchoolListCollection')
-        .doc('mthssCheng16767')
+        .doc(widget.schoolID)
         .collection('Classes')
-        .doc('class1A@mthss')
+        .doc(widget.classID)
         .collection('TimeTables')
         .doc('Thursday')
         .get();
     fri = await FirebaseFirestore.instance
         .collection('SchoolListCollection')
-        .doc('mthssCheng16767')
+        .doc(widget.schoolID)
         .collection('Classes')
-        .doc('class1A@mthss')
+        .doc(widget.classID)
         .collection('TimeTables')
         .doc('Friday')
         .get();
