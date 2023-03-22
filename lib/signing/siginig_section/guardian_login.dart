@@ -8,12 +8,11 @@ import 'package:get/get.dart';
 
 import '../../home/guardian_home/guardian_home_screen.dart';
 
-class GuardianLoginSection extends StatelessWidget {
+class GuardianLoginSection extends StatefulWidget {
   var id;
   var schooilID;
   var classID;
-  TextEditingController _idController = TextEditingController();
-  TextEditingController _passwoedController = TextEditingController();
+
   GuardianLoginSection({
     super.key,
     required this.screenSize,
@@ -25,6 +24,15 @@ class GuardianLoginSection extends StatelessWidget {
   final Size screenSize;
 
   @override
+  State<GuardianLoginSection> createState() => _GuardianLoginSectionState();
+}
+
+class _GuardianLoginSectionState extends State<GuardianLoginSection> {
+  TextEditingController _idController = TextEditingController();
+
+  TextEditingController _passwoedController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 300,
@@ -32,9 +40,9 @@ class GuardianLoginSection extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(screenSize.width * 1 / 13),
+            padding: EdgeInsets.all(widget.screenSize.width * 1 / 13),
             child: Container(
-              height: screenSize.width * 0.13,
+              height: widget.screenSize.width * 0.13,
               decoration: BoxDecoration(
                   // color: Colors.white,
                   borderRadius: BorderRadius.circular(15)),
@@ -53,15 +61,15 @@ class GuardianLoginSection extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: screenSize.width * 1 / 50,
+            height: widget.screenSize.width * 1 / 50,
           ),
           Padding(
             padding: EdgeInsets.only(
                 // top: screenSize.width * 1 / 36,
-                left: screenSize.width * 1 / 12,
-                right: screenSize.width * 1 / 13),
+                left: widget.screenSize.width * 1 / 12,
+                right: widget.screenSize.width * 1 / 13),
             child: Container(
-              height: screenSize.width * 0.13,
+              height: widget.screenSize.width * 0.13,
               decoration: BoxDecoration(
                   // color: Colors.white,
                   borderRadius: BorderRadius.circular(19)),
@@ -84,11 +92,11 @@ class GuardianLoginSection extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: screenSize.width * 1 / 23,
+            height: widget.screenSize.width * 1 / 23,
           ),
           InkWell(
             child: Padding(
-              padding: EdgeInsets.only(left: screenSize.width * 1 / 1.9),
+              padding: EdgeInsets.only(left: widget.screenSize.width * 1 / 1.9),
               child: Text(
                 "Forgot Password ?",
                 style: TextStyle(color: Colors.white),
@@ -102,10 +110,10 @@ class GuardianLoginSection extends StatelessWidget {
               //     ));
             },
           ),
-          SizedBox(height: screenSize.width * 1 / 36),
+          SizedBox(height: widget.screenSize.width * 1 / 36),
           Container(
-            height: screenSize.width * 1 / 7,
-            width: screenSize.width * 1 / 1.2,
+            height: widget.screenSize.width * 1 / 7,
+            width: widget.screenSize.width * 1 / 1.2,
             decoration: BoxDecoration(
                 color: Colors.blue, borderRadius: BorderRadius.circular(14)),
             child: TextButton(
@@ -122,8 +130,8 @@ class GuardianLoginSection extends StatelessWidget {
                           email: _idController.text.trim(),
                           password: _passwoedController.text.trim())
                       .then((value) => Get.to(GuardianHomeScreen(
-                            classId: classID,
-                            schoolId: schooilID,
+                            classId: widget.classID,
+                            schoolId: widget.schooilID,
                             guardianmailId: _idController.text.trim(),
                           )));
                 } catch (e) {
@@ -133,11 +141,11 @@ class GuardianLoginSection extends StatelessWidget {
               child: const Text('SIGN IN'),
             ),
           ),
-          SizedBox(height: screenSize.width * 1 / 100),
+          SizedBox(height: widget.screenSize.width * 1 / 100),
           Padding(
             padding: EdgeInsets.only(
-                left: screenSize.width * 1 / 4.3,
-                top: screenSize.width * 1 / 29),
+                left: widget.screenSize.width * 1 / 4.3,
+                top: widget.screenSize.width * 1 / 29),
             child: Row(children: [
               Text(
                 "Don't have an account ? ",
@@ -152,7 +160,7 @@ class GuardianLoginSection extends StatelessWidget {
                 ),
                 onTap: () {
                   Get.to(GuardianDujoSignup(
-                      schoolID: schooilID, classID: classID));
+                      schoolID: widget.schooilID, classID: widget.classID));
                 },
               ),
             ]),

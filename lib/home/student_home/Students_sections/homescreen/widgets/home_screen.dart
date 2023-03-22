@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dujo_offical_apk/home/student_home/Students_sections/homescreen/widgets/student_data.dart';
+import 'package:dujo_offical_apk/home/student_home/time_table/time_table_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -27,14 +28,66 @@ class StudentsHomeHomeScreen extends StatefulWidget {
 class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
   String studentName = '';
   String studentclass = '';
-  String rollNumber ='';
-  String studentimage='';
+  String rollNumber = '';
+  String studentimage = '';
+
+  late DocumentSnapshot<Map<String, dynamic>> mon;
+  late DocumentSnapshot<Map<String, dynamic>> tues;
+  late DocumentSnapshot<Map<String, dynamic>> wed;
+  late DocumentSnapshot<Map<String, dynamic>> thur;
+  late DocumentSnapshot<Map<String, dynamic>> fri;
+
+  void retrieveData() async {
+    mon = await FirebaseFirestore.instance
+        .collection('SchoolListCollection')
+        .doc('mthssCheng16767')
+        .collection('Classes')
+        .doc('class1A@mthss')
+        .collection('TimeTables')
+        .doc('Monday')
+        .get();
+    tues = await FirebaseFirestore.instance
+        .collection('SchoolListCollection')
+        .doc('mthssCheng16767')
+        .collection('Classes')
+        .doc('class1A@mthss')
+        .collection('TimeTables')
+        .doc('Tuesday')
+        .get();
+    wed = await FirebaseFirestore.instance
+        .collection('SchoolListCollection')
+        .doc('mthssCheng16767')
+        .collection('Classes')
+        .doc('class1A@mthss')
+        .collection('TimeTables')
+        .doc('Wednesday')
+        .get();
+    thur = await FirebaseFirestore.instance
+        .collection('SchoolListCollection')
+        .doc('mthssCheng16767')
+        .collection('Classes')
+        .doc('class1A@mthss')
+        .collection('TimeTables')
+        .doc('Thursday')
+        .get();
+    fri = await FirebaseFirestore.instance
+        .collection('SchoolListCollection')
+        .doc('mthssCheng16767')
+        .collection('Classes')
+        .doc('class1A@mthss')
+        .collection('TimeTables')
+        .doc('Friday')
+        .get();
+  }
+
   @override
   void initState() {
-  getStudentClass();
-  getStudentDetails();
+    getStudentClass();
+    getStudentDetails();
+    retrieveData();
     super.initState();
   }
+
   Widget build(BuildContext context) {
     log(studentName);
     return Scaffold(
@@ -64,7 +117,8 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                         ),
                         kHalfSizedBox,
                         StudentClass(
-                            studentClass: 'Class ${studentclass} | Roll no: ${rollNumber}'),
+                            studentClass:
+                                'Class ${studentclass} | Roll no: ${rollNumber}'),
                         kHalfSizedBox,
                         StudentYear(studentYear: '2020-2021'),
                       ],
@@ -140,7 +194,20 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
                           title: 'HomeWork',
                         ),
                         HomeCard(
-                          onPress: () {},
+                          onPress: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => TimeTablePage(
+                                          classID: widget.classID,
+                                          schoolID: widget.schoolID,
+                                          mon: mon,
+                                          tues: tues,
+                                          wed: wed,
+                                          thurs: thur,
+                                          fri: fri,
+                                        ))));
+                          },
                           icon: 'assets/icons/timetable.svg',
                           title: 'Time Table',
                         ),
@@ -322,7 +389,6 @@ class _StudentsHomeHomeScreenState extends State<StudentsHomeHomeScreen> {
       studentName = vari.data()!['studentName'];
       rollNumber = vari.data()!['rollNo'];
       studentimage = vari.data()!['studentImage'];
-     
     });
     log(vari.toString());
   }

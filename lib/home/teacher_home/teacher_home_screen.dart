@@ -30,10 +30,11 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
   String teacherImage = '';
   String teacherName = "";
   String teacherClass = "";
+  String teacherClassID="";
   @override
   void initState() {
-    getTeacherDetails();
-    getTeacherClass();
+    getTeacherDetails().then((value) =>  getTeacherClass()); 
+   
     super.initState();
   }
 
@@ -330,7 +331,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
     );
   }
 
-  void getTeacherDetails() async {
+ Future <void> getTeacherDetails() async {
     var vari = await FirebaseFirestore.instance
         .collection("SchoolListCollection")
         .doc(widget.schoolId)
@@ -340,16 +341,18 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
     setState(() {
       teacherName = vari.data()!['teacherName'];
       teacherImage = vari.data()!['teacherImage'];
+        teacherClassID = vari.data()!['classIncharge'];
+      
     });
     log(teacherImage.toString());
   }
 
-  void getTeacherClass() async {
+ Future< void> getTeacherClass() async {
     var vari = await FirebaseFirestore.instance
         .collection("SchoolListCollection")
         .doc(widget.schoolId)
         .collection("Classes")
-        .doc(widget.classID)
+        .doc(teacherClassID)
         .get();
     setState(() {
       teacherClass = vari.data()!['className'];
